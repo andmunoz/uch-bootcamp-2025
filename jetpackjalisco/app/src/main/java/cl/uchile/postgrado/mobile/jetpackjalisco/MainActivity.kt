@@ -14,6 +14,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -71,8 +72,15 @@ fun JaliscoApp() {
         TextField(
             value = userInput,
             onValueChange = { userInput = it },
-            label = { Text("Ingresa un número entre 1 y 100") },
-            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
+            label = { Text("Tu número") },
+            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
+            placeholder = { Text("Número entre 1 y 100") },
+            singleLine = true,
+            colors = TextFieldDefaults.colors(
+                focusedLabelColor = Color.Red,
+                focusedIndicatorColor = Color.Red,
+                unfocusedIndicatorColor = Color.Gray
+            )
         )
 
         // Agregamos el botón de acción que, en este caso, lo podemos programar inmediatamente
