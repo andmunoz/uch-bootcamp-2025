@@ -22,6 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -62,6 +63,7 @@ fun JaliscoApp() {
             text = "Jalisco Nunca Pierde",
             style = MaterialTheme.typography.headlineSmall,
             color = Color.Red,
+            fontWeight = FontWeight.ExtraBold,
             textAlign = TextAlign.Center
         )
 
