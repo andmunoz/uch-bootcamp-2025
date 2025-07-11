@@ -36,6 +36,7 @@ class MainActivity : ComponentActivity() {
                     JaliscoApp()
                 }
             } */
+            // Llamamos a la función composable
             JaliscoApp()
         }
     }
@@ -47,17 +48,20 @@ fun JaliscoApp() {
     var userInput by remember { mutableStateOf("") }
     var jaliscoAnswer by remember { mutableStateOf<String?>(null) }
 
+    // Pondremos una distrubución de eleentontos en columna
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(24.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
+        // Definimos el primer widget como un texto (título)
         Text(
             text = "Jalisco Nunca Pierde",
             style = MaterialTheme.typography.headlineSmall
         )
 
+        // Ponemos el campo de texto donde el usuario ingresa el número
         TextField(
             value = userInput,
             onValueChange = { userInput = it },
@@ -65,6 +69,7 @@ fun JaliscoApp() {
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
         )
 
+        // Agregamos el botón de acción que, en este caso, lo podemos programar inmediatamente
         Button(onClick = {
             val numero = userInput.toIntOrNull()
             if (numero != null && numero >= 1 && numero <= 100) {
@@ -77,6 +82,7 @@ fun JaliscoApp() {
             Text("Jugar")
         }
 
+        // Mostramos la respuesta de Jalisco, siempre y cuando haya una
         jaliscoAnswer?.let {
             Text(
                 text = it,
