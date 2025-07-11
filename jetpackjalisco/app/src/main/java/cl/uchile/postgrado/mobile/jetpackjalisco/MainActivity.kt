@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -84,15 +85,23 @@ fun JaliscoApp() {
         )
 
         // Agregamos el botón de acción que, en este caso, lo podemos programar inmediatamente
-        Button(onClick = {
-            val numero = userInput.toIntOrNull()
-            if (numero != null && numero >= 1 && numero <= 100) {
-                jaliscoAnswer = "¡Yo te gano con el ${numero + 1}!"
-            }
-            else {
-                jaliscoAnswer = "No hagas trampa, debe ser un número entre 1 y 100"
-            }
-        }) {
+        Button(
+            onClick = {
+                val numero = userInput.toIntOrNull()
+                if (numero != null && numero >= 1 && numero <= 100) {
+                    jaliscoAnswer = "¡Yo te gano con el ${numero + 1}!"
+                }
+                else {
+                    jaliscoAnswer = "No hagas trampa, debe ser un número entre 1 y 100"
+                }
+            },
+            enabled = userInput.isNotBlank(),
+            shape = MaterialTheme.shapes.small,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Red,
+                contentColor = Color.White
+            )
+        ) {
             Text("Jugar")
         }
 
