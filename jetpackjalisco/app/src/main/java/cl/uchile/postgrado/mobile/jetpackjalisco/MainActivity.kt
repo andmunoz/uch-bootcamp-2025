@@ -75,8 +75,12 @@ fun JaliscoApp() {
             textAlign = TextAlign.Center
         )
 
-        HorizontalDivider()
-        VerticalDivider()
+        // Agregamos una barra divisoria entre el título y el campo de ingreso del número
+        HorizontalDivider(
+            color = Color.Blue,
+            thickness = 2.dp,
+            modifier = Modifier.padding(vertical = 8.dp)
+        )
 
         // Ponemos el campo de texto donde el usuario ingresa el número
         TextField(
