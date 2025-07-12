@@ -55,10 +55,12 @@ fun ToDoList(modifier: Modifier = Modifier) {
     var tarea by remember { mutableStateOf("") }
     val listaTareas = remember { mutableStateListOf<String?>(null) }
 
+    // Definimos la estructura general de la aplicación en formato vertical
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
     ) {
+        // Agregamos el componente que presentará el título
         Text(
             text = "Mi Lista de Tareas",
             style = MaterialTheme.typography.headlineLarge,
@@ -68,6 +70,7 @@ fun ToDoList(modifier: Modifier = Modifier) {
                 .padding(8.dp)
         )
 
+        // Agregamos el campo para agregar el nombre de una nueva tarea
         TextField(
             value = tarea,
             onValueChange = { tarea = it },
@@ -79,6 +82,7 @@ fun ToDoList(modifier: Modifier = Modifier) {
                 .fillMaxWidth()
         )
 
+        // Agregamos el botón para agregar una nueva tarea
         Button(
             onClick = {
                 listaTareas.add(tarea)
@@ -93,14 +97,18 @@ fun ToDoList(modifier: Modifier = Modifier) {
             ),
             enabled = tarea.isNotBlank()
         ) {
+            // Agregamos el ícono
             Icon(
                 imageVector = Icons.Default.Add,
                 contentDescription = "Agregar tarea",
                 modifier = Modifier.padding(end = 4.dp)
             )
+
+            // Agregamos el texto
             Text("Agregar tarea")
         }
 
+        // Definimos una nueva columna solo para mostrar las tareas
         Column(
             modifier = Modifier
                 .weight(1f)
@@ -108,9 +116,12 @@ fun ToDoList(modifier: Modifier = Modifier) {
                     horizontal = 8.dp,
                     vertical = 8.dp
                 )
+                .fillMaxWidth()
         ) {
+            // Iteramos por cada una de las tareas almacenadas
             listaTareas.forEach { tarea ->
                 tarea?.let {
+                    // Cada tarea es presentada como un ícono y texto en una fila
                     Row(
                         modifier = Modifier
                             .padding(
@@ -131,6 +142,7 @@ fun ToDoList(modifier: Modifier = Modifier) {
                         )
                     }
 
+                    // Agregamos un separador horizontal
                     HorizontalDivider(
                         modifier = Modifier.padding(
                             horizontal = 8.dp,
