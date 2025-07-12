@@ -26,9 +26,11 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import cl.uchile.postgrado.mobile.milistadetareas.ui.theme.MiListaDeTareasTheme
@@ -49,10 +51,14 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun ToDoList(modifier: Modifier = Modifier) {
+    // Declaramos las estructura de datos a utilizar en la Screen
     var tarea by remember { mutableStateOf("") }
     val listaTareas = remember { mutableStateListOf<String?>(null) }
 
-    Column(modifier = modifier) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier
+    ) {
         Text(
             text = "Mi Lista de Tareas",
             style = MaterialTheme.typography.headlineLarge,
@@ -60,13 +66,14 @@ fun ToDoList(modifier: Modifier = Modifier) {
             color = Color.Red,
             modifier = Modifier
                 .padding(8.dp)
-                .fillMaxWidth()
         )
 
         TextField(
             value = tarea,
             onValueChange = { tarea = it },
-            label = { Text("Nombre de la tareas") },
+            label = { Text("Nombre de la tarea") },
+            placeholder = { Text("Ingresa una nueva tarea") },
+            singleLine = true,
             modifier = Modifier
                 .padding(8.dp)
                 .fillMaxWidth()
