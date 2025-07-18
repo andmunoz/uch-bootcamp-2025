@@ -276,7 +276,7 @@ fun ShoppingList(modifier: Modifier = Modifier, navController: NavHostController
     Column() {
         Spacer( modifier = Modifier.weight(1f) )
         Image(
-            painter = painterResource(R.drawable.ic_launcher_foreground),
+            painter = painterResource(R.mipmap.ic_billy),
             contentDescription = "Android de Fondo",
             contentScale = ContentScale.Crop,
             modifier = Modifier
