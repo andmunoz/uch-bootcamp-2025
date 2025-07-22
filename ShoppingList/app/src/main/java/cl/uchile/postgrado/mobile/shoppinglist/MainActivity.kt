@@ -31,12 +31,17 @@ import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults.TrailingIcon
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MenuAnchorType
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
@@ -57,49 +62,39 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import cl.uchile.postgrado.mobile.shoppinglist.ui.theme.ShoppingListTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            ShoppingListTheme {
-                AppNavigation()
-            }
+            AppNavigation()
         }
     }
 }
 
+// Componente que permite navegar entre pantallas
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "product_list") {
-        composable("product_list") { AppFrame(navController) }
+        composable("product_list") { MainFrame(navController) }
         composable("product_detail/{id}") { backStackEntry ->
             val id = backStackEntry.arguments?.getString("id")
-            AppDetail(id, navController)
+            ProductFrame(id, navController)
+        }
+        composable("add_product") { backStackEntry ->
+            AddProductFrame(navController)
         }
     }
 }
 
-@Composable
-fun AppDetail(id: String?, navController: NavHostController) {
-    Column() {
-        Text("Detalle del Producto")
-        Button(
-            onClick = {
-                navController.popBackStack()
-            },
-            modifier = Modifier.padding(16.dp)
-        ) {
-            Text("Volver")
-        }
-    }
-}
-
+// Componente que muestra el menú lateral (solo ejemplo, no es parte de la app)
 @Composable
 fun NavigationMenu(drawerState: DrawerState, scope: CoroutineScope) {
     Column(
@@ -125,6 +120,7 @@ fun NavigationMenu(drawerState: DrawerState, scope: CoroutineScope) {
     }
 }
 
+// Componente que muestra la barra de navegación
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopBar(drawerState: DrawerState, scope: CoroutineScope) {
@@ -151,6 +147,7 @@ fun TopBar(drawerState: DrawerState, scope: CoroutineScope) {
     )
 }
 
+// Componente que muestra la barra inferior (solo ejemplo, no es parte de la app)
 @Composable
 fun BottomBar() {
     BottomAppBar(
@@ -208,28 +205,10 @@ fun BottomBar() {
     }
 }
 
-@Composable
-fun FAButton() {
-    ExtendedFloatingActionButton(
-        containerColor = Color.Blue,
-        contentColor = Color.White,
-        onClick = { /*TODO*/ }
-    ) {
-        Icon(
-            imageVector = Icons.Sharp.Add,
-            contentDescription = "Agregar",
-            tint = Color.Yellow
-        )
-        Text(
-            text = "Agregar",
-            modifier = Modifier.padding(start = 8.dp)
-        )
-    }
-}
-
+// Componente que muestra la pantalla principal
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppFrame(navController: NavHostController) {
+fun MainFrame(navController: NavHostController) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope: CoroutineScope = rememberCoroutineScope()
 
@@ -248,7 +227,7 @@ fun AppFrame(navController: NavHostController) {
             BottomBar()
         }, */
         floatingActionButton = {
-            FAButton()
+            FAButton(navController)
         },
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
@@ -260,6 +239,27 @@ fun AppFrame(navController: NavHostController) {
     // }
 }
 
+// Componente que muestra el botón flotante de la pantalla principal
+@Composable
+fun FAButton(navController: NavHostController) {
+    ExtendedFloatingActionButton(
+        containerColor = Color.Blue,
+        contentColor = Color.White,
+        onClick = { navController.navigate("add_product") }
+    ) {
+        Icon(
+            imageVector = Icons.Sharp.Add,
+            contentDescription = "Agregar",
+            tint = Color.Yellow
+        )
+        Text(
+            text = "Agregar",
+            modifier = Modifier.padding(start = 8.dp)
+        )
+    }
+}
+
+// Componente que muestra la lista de productos
 @Composable
 fun ShoppingList(modifier: Modifier = Modifier, navController: NavHostController) {
     val productos = listOf("Leche", "Huevos", "Spaguetti", "Arroz", "Comida para Perros")
@@ -276,7 +276,7 @@ fun ShoppingList(modifier: Modifier = Modifier, navController: NavHostController
     Column() {
         Spacer( modifier = Modifier.weight(1f) )
         Image(
-            painter = painterResource(R.mipmap.ic_billy),
+            painter = painterResource(R.drawable.ic_launcher_foreground),
             contentDescription = "Android de Fondo",
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -288,7 +288,7 @@ fun ShoppingList(modifier: Modifier = Modifier, navController: NavHostController
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = 80.dp, bottom = 80.dp)
+            .padding(top = 100.dp)
     ) {
         items(productos) {producto ->
             Card(
@@ -296,7 +296,7 @@ fun ShoppingList(modifier: Modifier = Modifier, navController: NavHostController
                 shape = CutCornerShape(8.dp),
                 border = CardDefaults.outlinedCardBorder(),
                 colors = CardDefaults.cardColors(
-                    containerColor = Color.White
+                    containerColor = Color.White.copy(alpha = 0.5f)     // Transparenta el fondo
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -336,10 +336,205 @@ fun ShoppingList(modifier: Modifier = Modifier, navController: NavHostController
     }
 }
 
+// Componente que muestra la pantalla del detalle del producto
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ProductFrame(id: String?, navController: NavHostController) {
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val scope: CoroutineScope = rememberCoroutineScope()
+
+    Scaffold(
+        topBar = {
+            TopBar(drawerState, scope)
+        },
+        modifier = Modifier.fillMaxSize()
+    ) { innerPadding ->
+        ProductDetail(
+            id,
+            modifier = Modifier.padding(innerPadding),
+            navController
+        )
+    }
+    // }
+}
+
+// Componente que muestra el detalle del producto
+@Composable
+fun ProductDetail(id: String?, modifier: Modifier = Modifier, navController: NavHostController) {
+    Column(
+        modifier = Modifier
+            .padding(top = 100.dp)
+            .fillMaxSize()
+    ) {
+        Text("Detalle del Producto")
+        Button(
+            onClick = {
+                navController.popBackStack()
+            },
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Text("Volver")
+        }
+    }
+}
+
+// Componente que muestra la pantalla del detalle del producto
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AddProductFrame(navController: NavHostController) {
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val scope: CoroutineScope = rememberCoroutineScope()
+
+    Scaffold(
+        topBar = {
+            TopBar(drawerState, scope)
+        },
+        modifier = Modifier.fillMaxSize()
+    ) { innerPadding ->
+        AddProduct(
+            modifier = Modifier.padding(innerPadding),
+            navController
+        )
+    }
+    // }
+}
+
+// Componente que muestra el detalle del producto
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AddProduct(modifier: Modifier = Modifier, navController: NavHostController) {
+    val productCategories = listOf("Abarrotes", "Lácteos", "Limpieza", "Hogar")
+    var expanded by remember { mutableStateOf(false) }
+
+    val scrollState = rememberScrollState()
+
+    var productName by remember { mutableStateOf("") }
+    var productBrand by remember { mutableStateOf("") }
+    var productDescription by remember { mutableStateOf("") }
+    var productPrice by remember { mutableStateOf("") }
+    var productCategory by remember { mutableStateOf(productCategories[0]) }
+
+    Image(
+        painter = painterResource(R.drawable.ic_launcher_background),
+        contentDescription = "Fondo de Pantalla",
+        contentScale = ContentScale.Crop,
+        modifier = Modifier
+            .fillMaxSize()
+    )
+
+    Column() {
+        Spacer( modifier = Modifier.weight(1f) )
+        Image(
+            painter = painterResource(R.drawable.ic_launcher_foreground),
+            contentDescription = "Android de Fondo",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .fillMaxSize()
+                .weight(1f)
+        )
+    }
+
+    Column(
+        modifier = Modifier
+            .padding(top = 100.dp)
+            .fillMaxSize()
+            .verticalScroll(scrollState)
+            .imePadding(),
+    ) {
+        Text(
+            text = "Agregar Producto",
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        )
+        TextField(
+            value = productName,
+            onValueChange = { productName = it },
+            label = { Text("Producto") },
+            placeholder = { Text("Nombre del Producto") },
+            singleLine = true,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        )
+        TextField(
+            value = productBrand,
+            onValueChange = { productBrand = it },
+            label = { Text("Marca") },
+            placeholder = { Text("Marca del Producto") },
+            singleLine = true,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        )
+        TextField(
+            value = productDescription,
+            { productDescription = it },
+            label = { Text("Descripción") },
+            placeholder = { Text("Descripción del Producto") },
+            singleLine = true,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        )
+
+        ExposedDropdownMenuBox(
+            expanded = expanded,
+            onExpandedChange = { expanded = !expanded },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            TextField(
+                value = productCategory,
+                onValueChange = { },
+                readOnly = true,
+                label = { Text("Seleccione una opción") },
+                trailingIcon = { TrailingIcon(expanded = expanded) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .menuAnchor(MenuAnchorType.PrimaryEditable, true) // Importante para que funcione correctamente
+            )
+            ExposedDropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
+            ) {
+                val forEach = productCategories.forEach { opt ->
+                    DropdownMenuItem(
+                        text = { Text(opt) },
+                        onClick = {
+                            productCategory = opt
+                            expanded = false
+                        }
+                    )
+                }
+            }
+        }
+        TextField(
+            value = productPrice,
+            onValueChange = { productPrice = it },
+            label = { Text("Precio") },
+            placeholder = { Text("Precio del Producto") },
+            singleLine = true,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        )
+        Button(
+            onClick = {
+                navController.popBackStack()
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            Text("Volver")
+        }
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun ShoppingListPreview() {
-    ShoppingListTheme {
-        AppNavigation()
-    }
+    AppNavigation()
 }
