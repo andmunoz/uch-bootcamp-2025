@@ -273,7 +273,7 @@ fun ShoppingList(modifier: Modifier = Modifier, navController: NavHostController
             .fillMaxSize()
     )
 
-    Column() {
+    Column {
         Spacer( modifier = Modifier.weight(1f) )
         Image(
             painter = painterResource(R.drawable.ic_launcher_foreground),
@@ -422,7 +422,7 @@ fun AddProduct(modifier: Modifier = Modifier, navController: NavHostController) 
             .fillMaxSize()
     )
 
-    Column() {
+    Column {
         Spacer( modifier = Modifier.weight(1f) )
         Image(
             painter = painterResource(R.drawable.ic_launcher_foreground),
@@ -499,7 +499,7 @@ fun AddProduct(modifier: Modifier = Modifier, navController: NavHostController) 
                 expanded = expanded,
                 onDismissRequest = { expanded = false }
             ) {
-                val forEach = productCategories.forEach { opt ->
+                productCategories.forEach { opt ->
                     DropdownMenuItem(
                         text = { Text(opt) },
                         onClick = {
