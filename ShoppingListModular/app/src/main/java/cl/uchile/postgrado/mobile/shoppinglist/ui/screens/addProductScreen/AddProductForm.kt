@@ -75,6 +75,7 @@ fun AddProductForm(modifier: Modifier = Modifier,
                 .fillMaxWidth()
                 .padding(16.dp)
         )
+
         TextField(
             value = viewModel.productName,
             onValueChange = { viewModel.onProductNameChange(it) },
@@ -85,6 +86,7 @@ fun AddProductForm(modifier: Modifier = Modifier,
                 .fillMaxWidth()
                 .padding(16.dp)
         )
+
         TextField(
             value = viewModel.productBrand,
             onValueChange = { viewModel.onProductBrandChange(it) },
@@ -95,6 +97,7 @@ fun AddProductForm(modifier: Modifier = Modifier,
                 .fillMaxWidth()
                 .padding(16.dp)
         )
+
         TextField(
             value = viewModel.productDescription,
             onValueChange = { viewModel.onProductDescriptionChange(it) },
@@ -117,7 +120,7 @@ fun AddProductForm(modifier: Modifier = Modifier,
                 value = viewModel.productCategory,
                 onValueChange = { },
                 readOnly = true,
-                label = { Text("Seleccione una opción") },
+                label = { Text("Categoría") },
                 trailingIcon = { TrailingIcon(expanded = expanded) },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -138,6 +141,7 @@ fun AddProductForm(modifier: Modifier = Modifier,
                 }
             }
         }
+
         TextField(
             value = viewModel.productPrice,
             onValueChange = { viewModel.onProductPriceChange(it) },
@@ -148,15 +152,17 @@ fun AddProductForm(modifier: Modifier = Modifier,
                 .fillMaxWidth()
                 .padding(16.dp)
         )
+
         Button(
             onClick = {
+                viewModel.addProduct()
                 navController.popBackStack()
             },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            Text("Volver")
+            Text("Guardar")
         }
     }
 }
