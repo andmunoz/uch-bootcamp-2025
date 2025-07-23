@@ -40,6 +40,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import cl.uchile.postgrado.mobile.shoppinglist.R
 import kotlinx.coroutines.CoroutineScope
@@ -86,8 +87,10 @@ fun AddProductFloatingActionButton(navController: NavHostController) {
 
 // Componente que muestra la lista de productos
 @Composable
-fun ShoppingListForm(modifier: Modifier = Modifier, navController: NavHostController) {
-    val productos = listOf("Leche", "Huevos", "Spaguetti", "Arroz", "Comida para Perros")
+fun ShoppingListForm(modifier: Modifier = Modifier,
+                     navController: NavHostController,
+                     productListModel: ShoppingListViewModel = viewModel()) {
+
     var seleccionado by remember { mutableStateOf(false) }
 
     Image(
@@ -115,7 +118,7 @@ fun ShoppingListForm(modifier: Modifier = Modifier, navController: NavHostContro
             .fillMaxSize()
             .padding(top = 100.dp)
     ) {
-        items(productos) {producto ->
+        items(productListModel.products) {producto ->
             Card(
                 elevation = CardDefaults.cardElevation(4.dp),
                 shape = CutCornerShape(8.dp),
@@ -139,12 +142,12 @@ fun ShoppingListForm(modifier: Modifier = Modifier, navController: NavHostContro
                         modifier = Modifier.padding(end = 8.dp)*/
                     )
                     Text(
-                        producto,
+                        producto.productName,
                         modifier = Modifier.weight(1f)
                     )
                     Button(
                         onClick = {
-                            navController.navigate("product_detail/1")
+                            navController.navigate("product_detail/" + producto.id)
                         },
                         modifier = Modifier.padding(start = 8.dp),
                         colors = ButtonDefaults.buttonColors(
