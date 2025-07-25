@@ -164,7 +164,7 @@ fun AddProductForm(modifier: Modifier = Modifier,
             onClick = {
                 viewModel.validateForm()
                 if (viewModel.isFormValid) {
-                    viewModel.addProduct()
+                    viewModel.addProduct(navController.previousBackStackEntry?.savedStateHandle)
                     navController.popBackStack()
                 }
             },

@@ -92,6 +92,10 @@ fun ShoppingListForm(modifier: Modifier = Modifier,
                      productListModel: ShoppingListViewModel = viewModel()) {
 
     var seleccionado by remember { mutableStateOf(false) }
+    val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
+    if (savedStateHandle != null) {
+        productListModel.addProductFromHandler(savedStateHandle)
+    }
 
     Image(
         painter = painterResource(R.drawable.ic_launcher_background),
@@ -142,7 +146,7 @@ fun ShoppingListForm(modifier: Modifier = Modifier,
                         modifier = Modifier.padding(end = 8.dp)*/
                     )
                     Text(
-                        producto.productName,
+                        producto.productName + " " + producto.productBrand,
                         modifier = Modifier.weight(1f)
                     )
                     Button(

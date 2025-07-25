@@ -3,6 +3,7 @@ package cl.uchile.postgrado.mobile.shoppinglist.ui.screens.addProductScreen
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 
 class AddProductViewModel : ViewModel() {
@@ -69,8 +70,12 @@ class AddProductViewModel : ViewModel() {
                       productPriceValidation == validateInput.Success
     }
 
-    fun addProduct() {
-        // Lógica para guardar el producto
+    fun addProduct(saveStateHandle: SavedStateHandle?) {
+        saveStateHandle?.set("productName", productName)
+        saveStateHandle?.set("productBrand", productBrand)
+        saveStateHandle?.set("productDescription", productDescription)
+        saveStateHandle?.set("productPrice", productPrice)
+        saveStateHandle?.set("productCategory", productCategory)
     }
 }
 
