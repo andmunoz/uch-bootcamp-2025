@@ -3,7 +3,7 @@ package cl.uchile.postgrado.mobile.shoppinglist.ui.screens.shoppingListScreen
 import androidx.lifecycle.ViewModel
 
 class ShoppingListViewModel : ViewModel() {
-    val products = mutableListOf<ProductData>()
+    var products = mutableListOf<ProductData>()
         private set
 
     fun addProduct(product: ProductData) {

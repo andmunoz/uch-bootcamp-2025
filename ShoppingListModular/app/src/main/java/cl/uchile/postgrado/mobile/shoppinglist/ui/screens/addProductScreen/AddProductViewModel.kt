@@ -41,7 +41,66 @@ class AddProductViewModel : ViewModel() {
         productCategory = value
     }
 
+    var productNameError by mutableStateOf<String?>(null)
+    var productBrandError by mutableStateOf<String?>(null)
+    var productPriceError by mutableStateOf<String?>(null)
+
+    var isFormValid by mutableStateOf(false)
+
+    fun validateForm() {
+        val productNameValidation = validateProductName(productName)
+        val productBrandValidation = validateProductBrand(productBrand)
+        val productPriceValidation = validateProductPrice(productPrice)
+
+        productNameError = if (productNameValidation is validateInput.Error) {
+            productNameValidation.errorMessage
+        } else { null }
+
+        productBrandError = if (productBrandValidation is validateInput.Error) {
+            productBrandValidation.errorMessage
+        } else { null }
+
+        productPriceError = if (productPriceValidation is validateInput.Error) {
+            productPriceValidation.errorMessage
+        } else { null }
+
+        isFormValid = productNameValidation == validateInput.Success &&
+                      productBrandValidation == validateInput.Success &&
+                      productPriceValidation == validateInput.Success
+    }
+
     fun addProduct() {
         // Lógica para guardar el producto
+    }
+}
+
+sealed class validateInput {
+    object Success : validateInput()
+    data class Error(val errorMessage: String) : validateInput()
+}
+
+fun validateProductName(productName: String): validateInput {
+    return if (productName.isEmpty()) {
+        validateInput.Error("El nombre del producto no puede estar vacío")
+    } else {
+        validateInput.Success
+    }
+}
+
+fun validateProductBrand(productBrand: String): validateInput {
+    return if (productBrand.isEmpty()) {
+        validateInput.Error("La marca del producto no puede estar vacía")
+    } else {
+        validateInput.Success
+    }
+}
+
+fun validateProductPrice(productPrice: String): validateInput {
+    return if (productPrice.isEmpty()) {
+        validateInput.Error("El precio del producto no puede estar vacío")
+    } else if (productPrice.toDoubleOrNull() == null) {
+        validateInput.Error("El precio del producto debe ser un número")
+    } else {
+        validateInput.Success
     }
 }

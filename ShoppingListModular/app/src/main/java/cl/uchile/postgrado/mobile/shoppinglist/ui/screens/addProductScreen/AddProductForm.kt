@@ -23,6 +23,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -81,22 +82,26 @@ fun AddProductForm(modifier: Modifier = Modifier,
             onValueChange = { viewModel.onProductNameChange(it) },
             label = { Text("Producto") },
             placeholder = { Text("Nombre del Producto") },
+            isError = viewModel.productNameError != null,
             singleLine = true,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
         )
+        viewModel.productNameError?.let{ Text(it, color = Color.Red) }
 
         TextField(
             value = viewModel.productBrand,
             onValueChange = { viewModel.onProductBrandChange(it) },
             label = { Text("Marca") },
             placeholder = { Text("Marca del Producto") },
+            isError = viewModel.productBrandError != null,
             singleLine = true,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
         )
+        viewModel.productBrandError?.let{ Text(it, color = Color.Red) }
 
         TextField(
             value = viewModel.productDescription,
@@ -148,15 +153,20 @@ fun AddProductForm(modifier: Modifier = Modifier,
             label = { Text("Precio") },
             placeholder = { Text("Precio del Producto") },
             singleLine = true,
+            isError = viewModel.productPriceError != null,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
         )
+        viewModel.productPriceError?.let{ Text(it, color = Color.Red) }
 
         Button(
             onClick = {
-                viewModel.addProduct()
-                navController.popBackStack()
+                viewModel.validateForm()
+                if (viewModel.isFormValid) {
+                    viewModel.addProduct()
+                    navController.popBackStack()
+                }
             },
             modifier = Modifier
                 .fillMaxWidth()
