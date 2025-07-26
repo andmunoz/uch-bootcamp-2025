@@ -88,7 +88,15 @@ fun AddProductForm(modifier: Modifier = Modifier,
                 .fillMaxWidth()
                 .padding(16.dp)
         )
-        viewModel.productNameError?.let{ Text(it, color = Color.Red) }
+        viewModel.productNameError?.let{
+            Text(
+                it,
+                color = Color.Red,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            )
+        }
 
         TextField(
             value = viewModel.productBrand,
@@ -101,7 +109,15 @@ fun AddProductForm(modifier: Modifier = Modifier,
                 .fillMaxWidth()
                 .padding(16.dp)
         )
-        viewModel.productBrandError?.let{ Text(it, color = Color.Red) }
+        viewModel.productBrandError?.let{
+            Text(
+                it,
+                color = Color.Red,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            )
+        }
 
         TextField(
             value = viewModel.productDescription,
@@ -135,7 +151,7 @@ fun AddProductForm(modifier: Modifier = Modifier,
                 expanded = expanded,
                 onDismissRequest = { expanded = false }
             ) {
-                val forEach = productCategories.forEach { opt ->
+                productCategories.forEach { opt ->
                     DropdownMenuItem(
                         text = { Text(opt) },
                         onClick = {
@@ -158,7 +174,15 @@ fun AddProductForm(modifier: Modifier = Modifier,
                 .fillMaxWidth()
                 .padding(16.dp)
         )
-        viewModel.productPriceError?.let{ Text(it, color = Color.Red) }
+        viewModel.productPriceError?.let{
+            Text(
+                it,
+                color = Color.Red,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            )
+        }
 
         Button(
             onClick = {
