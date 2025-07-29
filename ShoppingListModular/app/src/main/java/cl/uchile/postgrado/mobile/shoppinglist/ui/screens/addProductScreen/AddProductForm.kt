@@ -15,6 +15,9 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults.TrailingIcon
 import androidx.compose.material3.MenuAnchorType
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -30,13 +33,19 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import cl.uchile.postgrado.mobile.shoppinglist.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 // Componente que muestra el detalle del producto
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddProductForm(modifier: Modifier = Modifier,
-                   navController: NavHostController,
-                   viewModel: AddProductViewModel = viewModel()) {
+fun AddProductForm(
+    modifier: Modifier = Modifier,
+    navController: NavHostController,
+    snackbarHostState: SnackbarHostState,
+    scope: CoroutineScope,
+    viewModel: AddProductViewModel = viewModel()
+) {
 
     val productCategories = listOf("Abarrotes", "Lácteos", "Limpieza", "Hogar")
     var expanded by remember { mutableStateOf(false) }
@@ -189,7 +198,21 @@ fun AddProductForm(modifier: Modifier = Modifier,
                 viewModel.validateForm()
                 if (viewModel.isFormValid) {
                     viewModel.addProduct(navController.previousBackStackEntry?.savedStateHandle)
-                    navController.popBackStack()
+                    scope.launch {
+                        val result = snackbarHostState
+                            .showSnackbar(
+                                "Producto agregado a la lista",
+                                actionLabel = "Continuar",
+                                withDismissAction = true,
+                                duration = SnackbarDuration.Indefinite
+                            )
+                        when (result){
+                            SnackbarResult.ActionPerformed -> {
+                                navController.popBackStack()
+                            }
+                            SnackbarResult.Dismissed -> { }
+                        }
+                    }
                 }
             },
             modifier = Modifier
@@ -199,4 +222,8 @@ fun AddProductForm(modifier: Modifier = Modifier,
             Text("Guardar")
         }
     }
+    /* val text = "¡Producto agregado a la lista!"
+    val duration = Toast.LENGTH_SHORT
+    val toast = Toast.makeText(navController.context, text, duration)
+    toast.show() */
 }
