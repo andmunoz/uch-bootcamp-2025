@@ -14,7 +14,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import cl.uchile.postgrado.mobile.shoppinglist.ui.screens.shoppingListScreen.ShoppingListTopBar
+import cl.uchile.postgrado.mobile.shoppinglist.ui.components.ShoppingListTopBar
 import kotlinx.coroutines.CoroutineScope
 
 // Componente que muestra el detalle del producto

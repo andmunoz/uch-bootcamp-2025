@@ -1,5 +1,6 @@
 package cl.uchile.postgrado.mobile.shoppinglist.ui.screens.addProductScreen
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -201,16 +202,25 @@ fun AddProductForm(
                     scope.launch {
                         val result = snackbarHostState
                             .showSnackbar(
-                                "Producto agregado a la lista",
-                                actionLabel = "Continuar",
+                                "¿Está seguro de agregar el producto?",
+                                actionLabel = "Sí",
                                 withDismissAction = true,
                                 duration = SnackbarDuration.Indefinite
                             )
                         when (result){
                             SnackbarResult.ActionPerformed -> {
                                 navController.popBackStack()
+                                Toast.makeText(
+                                    navController.context,
+                                    "¡Producto agregado a la lista!",
+                                    Toast.LENGTH_SHORT).show()
                             }
-                            SnackbarResult.Dismissed -> { }
+                            SnackbarResult.Dismissed -> {
+                                Toast.makeText(
+                                    navController.context,
+                                    "¡Acción cancelada!",
+                                    Toast.LENGTH_SHORT).show()
+                            }
                         }
                     }
                 }
@@ -226,4 +236,8 @@ fun AddProductForm(
     val duration = Toast.LENGTH_SHORT
     val toast = Toast.makeText(navController.context, text, duration)
     toast.show() */
+    /* scope.launch {
+        snackbarHostState.showSnackbar("¡Producto agregado a la lista!")
+    }
+    navController.popBackStack() */
 }
