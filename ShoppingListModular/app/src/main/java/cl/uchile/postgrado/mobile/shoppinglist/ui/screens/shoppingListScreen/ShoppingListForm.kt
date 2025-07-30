@@ -26,10 +26,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import cl.uchile.postgrado.mobile.shoppinglist.R
+import cl.uchile.postgrado.mobile.shoppinglist.ui.components.SecondaryButton
 
 // Componente que muestra la lista de productos
 @Composable
@@ -95,19 +97,12 @@ fun ShoppingListForm(modifier: Modifier = Modifier,
                         producto.productName + " " + producto.productBrand,
                         modifier = Modifier.weight(1f)
                     )
-                    Button(
+                    SecondaryButton(
+                        text = stringResource(R.string.details_button),
                         onClick = {
                             navController.navigate("product_detail/" + producto.id)
-                        },
-                        modifier = Modifier.padding(start = 8.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = Color.White,
-                            contentColor = Color.Blue
-                        ),
-                        shape = ButtonDefaults.elevatedShape
-                    ) {
-                        Text("Detalles")
-                    }
+                        }
+                    )
                 }
             }
         }

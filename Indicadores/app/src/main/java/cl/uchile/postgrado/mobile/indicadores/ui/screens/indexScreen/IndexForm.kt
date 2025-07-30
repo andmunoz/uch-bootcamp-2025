@@ -23,9 +23,11 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import cl.uchile.postgrado.mobile.indicadores.R
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -55,7 +57,7 @@ fun IndexForm(navController: NavHostController,
                 value = indexModel.indexType,
                 onValueChange = { },
                 readOnly = true,
-                label = { Text("Tipo de Índice") },
+                label = { Text(stringResource(R.string.index_type_text)) },
                 isError = indexModel.indexErrorMessage != null,
                 trailingIcon = { TrailingIcon(expanded = expandedIndexType) },
                 modifier = Modifier
@@ -89,7 +91,7 @@ fun IndexForm(navController: NavHostController,
                 value = indexModel.index,
                 onValueChange = { },
                 readOnly = true,
-                label = { Text("Índice Económico") },
+                label = { Text(stringResource(R.string.business_index_text)) },
                 trailingIcon = { TrailingIcon(expanded = expandedIndex) },
                 isError = indexModel.indexErrorMessage != null,
                 modifier = Modifier
@@ -122,8 +124,8 @@ fun IndexForm(navController: NavHostController,
         TextField(
             value = indexModel.date,
             onValueChange = { indexModel.onDateChange(it) },
-            label = { Text("Fecha") },
-            placeholder = { Text("Formato dd/mm/aaaa") },
+            label = { Text(stringResource(R.string.date_text)) },
+            placeholder = { Text(stringResource(R.string.date_placeholder)) },
             isError = indexModel.dateErrorMessage != null,
             modifier = Modifier
                 .fillMaxWidth()
@@ -144,7 +146,7 @@ fun IndexForm(navController: NavHostController,
                     navController.navigate("index_detail/${indexModel.index}/${indexModel.date}")
                 }
                 else {
-                    scope.launch{
+                    scope.launch {
                         snackbarHostState.showSnackbar("El formulario presenta errores")
                     }
                 }
@@ -153,7 +155,7 @@ fun IndexForm(navController: NavHostController,
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            Text("Consultar")
+            Text(stringResource(R.string.query_button))
         }
     }
 }

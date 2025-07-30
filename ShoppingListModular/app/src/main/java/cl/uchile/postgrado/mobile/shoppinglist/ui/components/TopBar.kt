@@ -9,9 +9,11 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
+import cl.uchile.postgrado.mobile.shoppinglist.R
 
 // Componente que muestra la barra de navegación
 @OptIn(ExperimentalMaterial3Api::class)
@@ -20,7 +22,7 @@ fun ShoppingListTopBar(drawerState: DrawerState, scope: CoroutineScope) {
     CenterAlignedTopAppBar(
         title = {
             Text(
-                text = "Mi Lista de Compras",
+                text = stringResource(R.string.app_name),
                 modifier = Modifier.padding(start = 16.dp),
                 fontWeight = FontWeight.Bold
             )

@@ -2,4 +2,9 @@
 <resources>
     <string name="app_name">Lista de Compras</string>
     <string name="add_button">Agregar Producto</string>
+    <string name="save_button">Guardar</string>
+    <string name="details_button">Detalles</string>
+    <string name="cancel_button">Cancelar</string>
+    <string name="add_product_success">¡El producto ha sido agregado!</string>
+    <string name="price_label">CLP %s</string>
 </resources>

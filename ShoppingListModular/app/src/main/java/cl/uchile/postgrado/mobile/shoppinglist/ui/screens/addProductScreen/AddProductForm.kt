@@ -3,6 +3,7 @@ package cl.uchile.postgrado.mobile.shoppinglist.ui.screens.addProductScreen
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,10 +31,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import cl.uchile.postgrado.mobile.shoppinglist.R
+import cl.uchile.postgrado.mobile.shoppinglist.ui.components.PrimaryButton
+import cl.uchile.postgrado.mobile.shoppinglist.ui.components.SecondaryButton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -194,7 +198,47 @@ fun AddProductForm(
             )
         }
 
-        Button(
+        Row {
+            SecondaryButton(
+                text = stringResource(R.string.cancel_button),
+                onClick = { navController.popBackStack() }
+            )
+            PrimaryButton(
+                text = stringResource(R.string.save_button),
+                onClick = {
+                    viewModel.validateForm()
+                    if (viewModel.isFormValid) {
+                        viewModel.addProduct(navController.previousBackStackEntry?.savedStateHandle)
+                        scope.launch {
+                            val result = snackbarHostState
+                                .showSnackbar(
+                                    "¿Está seguro de agregar el producto?",
+                                    actionLabel = "Sí",
+                                    withDismissAction = true,
+                                    duration = SnackbarDuration.Indefinite
+                                )
+                            when (result){
+                                SnackbarResult.ActionPerformed -> {
+                                    navController.popBackStack()
+                                    Toast.makeText(
+                                        navController.context,
+                                        "¡Producto agregado a la lista!",
+                                        Toast.LENGTH_SHORT).show()
+                                }
+                                SnackbarResult.Dismissed -> {
+                                    Toast.makeText(
+                                        navController.context,
+                                        "¡Acción cancelada!",
+                                        Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        }
+                    }
+                }
+            )
+        }
+
+        /* Button(
             onClick = {
                 viewModel.validateForm()
                 if (viewModel.isFormValid) {
@@ -230,7 +274,7 @@ fun AddProductForm(
                 .padding(16.dp)
         ) {
             Text("Guardar")
-        }
+        } */
     }
     /* val text = "¡Producto agregado a la lista!"
     val duration = Toast.LENGTH_SHORT

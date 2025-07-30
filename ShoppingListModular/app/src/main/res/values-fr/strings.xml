@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Liste de Courses</string>
+    <string name="add_button">Ajouter un Produit</string>
+    <string name="save_button">Garder</string>
+    <string name="details_button">Détails</string>
+    <string name="cancel_button">Annuler</string>
+    <string name="add_product_success">Le produit a été ajouté!</string>
+    <string name="price_label">EU %s</string>
+</resources>
