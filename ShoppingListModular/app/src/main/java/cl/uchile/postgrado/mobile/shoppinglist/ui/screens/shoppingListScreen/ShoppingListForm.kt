@@ -39,7 +39,7 @@ fun ShoppingListForm(modifier: Modifier = Modifier,
                      navController: NavHostController,
                      productListModel: ShoppingListViewModel = viewModel()) {
 
-    var seleccionado by remember { mutableStateOf(false) }
+    var selected by remember { mutableStateOf(false) }
     val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
     if (savedStateHandle != null) {
         productListModel.addProductFromHandler(savedStateHandle)
@@ -47,7 +47,7 @@ fun ShoppingListForm(modifier: Modifier = Modifier,
 
     Image(
         painter = painterResource(R.drawable.ic_launcher_background),
-        contentDescription = "Fondo de Pantalla",
+        contentDescription = "",
         contentScale = ContentScale.Crop,
         modifier = Modifier
             .fillMaxSize()
@@ -57,7 +57,7 @@ fun ShoppingListForm(modifier: Modifier = Modifier,
         Spacer( modifier = Modifier.weight(1f) )
         Image(
             painter = painterResource(R.drawable.ic_launcher_foreground),
-            contentDescription = "Android de Fondo",
+            contentDescription = "",
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxSize()
@@ -89,9 +89,8 @@ fun ShoppingListForm(modifier: Modifier = Modifier,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Checkbox(
-                        checked = seleccionado,
-                        onCheckedChange = { seleccionado = it } /* ,
-                        modifier = Modifier.padding(end = 8.dp)*/
+                        checked = selected,
+                        onCheckedChange = { selected = it }
                     )
                     Text(
                         producto.productName + " " + producto.productBrand,

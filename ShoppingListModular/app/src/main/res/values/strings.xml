@@ -7,4 +7,7 @@
     <string name="add_product_success">The product was added!</string>
     <string name="price_label">USD %s</string>
     <string name="email_label" translatable="false">Email</string>
+    <string name="add_title">Add Product</string>
+    <string name="product_label">Product</string>
+    <string name="product_hint">Add Product Name</string>
 </resources>

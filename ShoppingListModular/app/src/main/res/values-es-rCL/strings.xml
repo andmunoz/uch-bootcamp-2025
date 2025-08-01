@@ -7,4 +7,7 @@
     <string name="cancel_button">Cancelar</string>
     <string name="add_product_success">¡El producto ha sido agregado!</string>
     <string name="price_label">CLP %s</string>
+    <string name="add_title">Agregar Producto</string>
+    <string name="product_label">Producto</string>
+    <string name="product_hint">Agregar Nombre del Producto</string>
 </resources>

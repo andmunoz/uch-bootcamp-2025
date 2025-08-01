@@ -4,13 +4,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import cl.uchile.postgrado.mobile.shoppinglist.R
@@ -24,13 +23,13 @@ fun ShoppingListTopBar(drawerState: DrawerState, scope: CoroutineScope) {
             Text(
                 text = stringResource(R.string.app_name),
                 modifier = Modifier.padding(start = 16.dp),
-                fontWeight = FontWeight.Bold
+                style = MaterialTheme.typography.titleLarge
             )
         },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color.Blue,
-            titleContentColor = Color.White,
-            navigationIconContentColor = Color.Black
+        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primary,
+            titleContentColor = MaterialTheme.colorScheme.onPrimary
         )
+
     )
 }

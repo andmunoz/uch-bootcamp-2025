@@ -1,6 +1,8 @@
 package cl.uchile.postgrado.mobile.shoppinglist.ui.screens.addProductScreen
 
 import android.widget.Toast
+import androidx.annotation.StringRes
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -54,12 +56,13 @@ fun AddProductForm(
 
     val productCategories = listOf("Abarrotes", "Lácteos", "Limpieza", "Hogar")
     var expanded by remember { mutableStateOf(false) }
+    var visible: Boolean by remember { mutableStateOf(false) }
 
     val scrollState = rememberScrollState()
 
     Image(
         painter = painterResource(R.drawable.ic_launcher_background),
-        contentDescription = "Fondo de Pantalla",
+        contentDescription = "",
         contentScale = ContentScale.Crop,
         modifier = Modifier
             .fillMaxSize()
@@ -69,7 +72,7 @@ fun AddProductForm(
         Spacer( modifier = Modifier.weight(1f) )
         Image(
             painter = painterResource(R.drawable.ic_launcher_foreground),
-            contentDescription = "Android de Fondo",
+            contentDescription = "",
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxSize()
@@ -85,7 +88,7 @@ fun AddProductForm(
             .imePadding(),
     ) {
         Text(
-            text = "Agregar Producto",
+            text = stringResource(R.string.add_title),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
@@ -94,17 +97,17 @@ fun AddProductForm(
         TextField(
             value = viewModel.productName,
             onValueChange = { viewModel.onProductNameChange(it) },
-            label = { Text("Producto") },
-            placeholder = { Text("Nombre del Producto") },
+            label = { stringResource(R.string.product_label) },
+            placeholder = { Text(stringResource(R.string.product_hint)) },
             isError = viewModel.productNameError != null,
             singleLine = true,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
         )
-        viewModel.productNameError?.let{
+        AnimatedVisibility(visible = viewModel.productNameError != null) {
             Text(
-                it,
+                text = viewModel.productNameError ?: "",
                 color = Color.Red,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -123,9 +126,9 @@ fun AddProductForm(
                 .fillMaxWidth()
                 .padding(16.dp)
         )
-        viewModel.productBrandError?.let{
+        AnimatedVisibility(visible = viewModel.productBrandError != null) {
             Text(
-                it,
+                text = viewModel.productBrandError?: "",
                 color = Color.Red,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -188,15 +191,16 @@ fun AddProductForm(
                 .fillMaxWidth()
                 .padding(16.dp)
         )
-        viewModel.productPriceError?.let{
+        AnimatedVisibility(visible = viewModel.productPriceError != null) {
             Text(
-                it,
+                text = viewModel.productPriceError?: "",
                 color = Color.Red,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
             )
         }
+
 
         Row {
             SecondaryButton(

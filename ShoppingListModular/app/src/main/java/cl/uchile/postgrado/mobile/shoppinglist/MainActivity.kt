@@ -12,13 +12,16 @@ import androidx.navigation.compose.rememberNavController
 import cl.uchile.postgrado.mobile.shoppinglist.ui.screens.addProductScreen.AddProductScreen
 import cl.uchile.postgrado.mobile.shoppinglist.ui.screens.productDetailScreen.ProductDetailScreen
 import cl.uchile.postgrado.mobile.shoppinglist.ui.screens.shoppingListScreen.ShoppingListScreen
+import cl.uchile.postgrado.mobile.shoppinglist.ui.theme.DefaultTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            AppNavigation()
+            DefaultTheme {
+                AppNavigation()
+            }
         }
     }
 }
