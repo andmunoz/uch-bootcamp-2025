@@ -201,7 +201,6 @@ fun AddProductForm(
             )
         }
 
-
         Row {
             SecondaryButton(
                 text = stringResource(R.string.cancel_button),
@@ -241,49 +240,7 @@ fun AddProductForm(
                 }
             )
         }
-
-        /* Button(
-            onClick = {
-                viewModel.validateForm()
-                if (viewModel.isFormValid) {
-                    viewModel.addProduct(navController.previousBackStackEntry?.savedStateHandle)
-                    scope.launch {
-                        val result = snackbarHostState
-                            .showSnackbar(
-                                "¿Está seguro de agregar el producto?",
-                                actionLabel = "Sí",
-                                withDismissAction = true,
-                                duration = SnackbarDuration.Indefinite
-                            )
-                        when (result){
-                            SnackbarResult.ActionPerformed -> {
-                                navController.popBackStack()
-                                Toast.makeText(
-                                    navController.context,
-                                    "¡Producto agregado a la lista!",
-                                    Toast.LENGTH_SHORT).show()
-                            }
-                            SnackbarResult.Dismissed -> {
-                                Toast.makeText(
-                                    navController.context,
-                                    "¡Acción cancelada!",
-                                    Toast.LENGTH_SHORT).show()
-                            }
-                        }
-                    }
-                }
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            Text("Guardar")
-        } */
     }
-    /* val text = "¡Producto agregado a la lista!"
-    val duration = Toast.LENGTH_SHORT
-    val toast = Toast.makeText(navController.context, text, duration)
-    toast.show() */
     /* scope.launch {
         snackbarHostState.showSnackbar("¡Producto agregado a la lista!")
     }
