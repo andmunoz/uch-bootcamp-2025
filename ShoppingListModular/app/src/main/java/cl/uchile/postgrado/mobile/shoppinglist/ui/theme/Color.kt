@@ -4,39 +4,26 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
-val BackPurple80 = Color(0xFF000000)
-
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
-val BackPurple40 = Color(0xFFFFFFFF)
-
-val DarkColorScheme = darkColorScheme(
-    background = BackPurple40,
-    primary = Purple40,
-    onPrimary = Color.White,
-    secondary = PurpleGrey40,
-    onSecondary = Color.White,
-    tertiary = Pink40
+val LightColorScheme = lightColorScheme(
+    background = Color(0xFFDAD9dD),
+    primary = Color(0xFF769CDF),
+    onPrimary = Color(0xFFFFFFFF),
+    secondary = Color(0xFF515F79),
+    onSecondary = Color(0xFFFFFFFF),
+    tertiary = Color(0xFF814A87),
+    onTertiary = Color(0xFFFFFFFF),
+    error = Color(0xFFBA1A1A),
+    onError = Color(0xFFFFFFFF)
 )
 
-val LightColorScheme = lightColorScheme(
-    background = BackPurple80,
-    primary = Purple80,
-    onPrimary = Color.Black,
-    secondary = PurpleGrey80,
-    onSecondary = Color.Black,
-    tertiary = Pink80
-
-    /* Other default colors to override
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+val DarkColorScheme = darkColorScheme(
+    background = Color(0xFF121317),
+    primary = Color(0xFFAAC7FF),
+    onPrimary = Color(0xFF002F64),
+    secondary = Color(0xFFB9C7E5),
+    onSecondary = Color(0xFF233148),
+    tertiary = Color(0xFFF2B0F5),
+    onTertiary = Color(0xFF4D1A55),
+    error = Color(0xFFFFB4AB),
+    onError = Color(0xFF690005)
 )
