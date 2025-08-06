@@ -8,6 +8,7 @@ import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
@@ -25,21 +26,7 @@ import kotlinx.coroutines.CoroutineScope
 // Componente que muestra el botón flotante de la pantalla principal
 @Composable
 fun AddProductFloatingActionButton(navController: NavHostController) {
-    ExtendedFloatingActionButton(
-        containerColor = Color.Blue,
-        contentColor = Color.White,
-        onClick = { navController.navigate("add_product") }
-    ) {
-        Icon(
-            imageVector = Icons.Sharp.Add,
-            contentDescription = stringResource(R.string.add_button),
-            tint = Color.Yellow
-        )
-        Text(
-            text = stringResource(R.string.add_button),
-            modifier = Modifier.padding(start = 8.dp)
-        )
-    }
+
 }
 
 // Componente que muestra la pantalla principal
