@@ -20,13 +20,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import cl.uchile.postgrado.mobile.shoppinglist.R
+import cl.uchile.postgrado.mobile.shoppinglist.ui.components.PrimaryFab
 import cl.uchile.postgrado.mobile.shoppinglist.ui.components.ShoppingListTopBar
 import kotlinx.coroutines.CoroutineScope
 
 // Componente que muestra el botón flotante de la pantalla principal
 @Composable
 fun AddProductFloatingActionButton(navController: NavHostController) {
-
+    PrimaryFab("Agregar", { navController.navigate("add_product") }, navController)
 }
 
 // Componente que muestra la pantalla principal
