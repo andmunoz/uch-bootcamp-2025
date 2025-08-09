@@ -8,10 +8,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import cl.uchile.postgrado.mobile.indicadores.ui.components.Destination
 import cl.uchile.postgrado.mobile.indicadores.ui.components.IndexTopBar
+import cl.uchile.postgrado.mobile.indicadores.ui.components.SectionBottomBar
 
 @Composable
-fun IndexScreen(navController: NavHostController) {
+fun IndexScreen(navController: NavHostController, destination: Destination) {
     val snackbarHostState = remember { SnackbarHostState() }
 
     Scaffold(
@@ -21,9 +23,12 @@ fun IndexScreen(navController: NavHostController) {
         snackbarHost = {
             SnackbarHost(snackbarHostState)
         },
+        bottomBar = {
+            SectionBottomBar(navController, destination)
+        },
         modifier = Modifier
             .fillMaxSize()
     ) { innerPadding ->
-        IndexForm(navController, snackbarHostState, innerPadding)
+        IndexForm(navController, snackbarHostState, innerPadding, destination)
     }
 }
