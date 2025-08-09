@@ -12,7 +12,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
+import cl.uchile.postgrado.mobile.shoppinglist.R
 import cl.uchile.postgrado.mobile.shoppinglist.ui.components.ShoppingListTopBar
 
 // Componente que muestra la pantalla del detalle del producto
@@ -25,7 +27,7 @@ fun AddProductScreen(navController: NavHostController) {
 
     Scaffold(
         topBar = {
-            ShoppingListTopBar(drawerState, scope)
+            ShoppingListTopBar(stringResource(R.string.app_name))
         },
         snackbarHost = {
             SnackbarHost(snackbarHostState)
