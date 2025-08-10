@@ -38,7 +38,6 @@ fun IndexForm(navController: NavHostController,
               innerPadding: PaddingValues,
               destination: Destination,
               indexModel: IndexViewModel = viewModel()) {
-    var expandedIndexType by remember { mutableStateOf(false) }
     var expandedIndex by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
 
@@ -48,40 +47,6 @@ fun IndexForm(navController: NavHostController,
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        /* ExposedDropdownMenuBox(
-            expanded = expandedIndexType,
-            onExpandedChange = { expandedIndexType = !expandedIndexType },
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth()
-        ) {
-            TextField(
-                value = indexModel.indexType,
-                onValueChange = { },
-                readOnly = true,
-                label = { Text(stringResource(R.string.index_type_text)) },
-                isError = indexModel.indexErrorMessage != null,
-                trailingIcon = { TrailingIcon(expanded = expandedIndexType) },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .menuAnchor(MenuAnchorType.PrimaryEditable, true)
-            )
-            ExposedDropdownMenu(
-                expanded = expandedIndexType,
-                onDismissRequest = { expandedIndexType = false }
-            ) {
-                indexModel.indexTypeOptions.forEach { option ->
-                    DropdownMenuItem(
-                        text = { Text(option) },
-                        onClick = {
-                            expandedIndexType = false
-                            indexModel.onIndexTypeChange(option)
-                        }
-                    )
-                }
-            }
-        } */
-
         indexModel.indexType = destination.contentDescription
 
         if (destination == Destination.NAC) {
