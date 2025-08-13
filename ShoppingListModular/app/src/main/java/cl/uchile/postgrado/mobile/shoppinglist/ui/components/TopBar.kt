@@ -1,6 +1,5 @@
 package cl.uchile.postgrado.mobile.shoppinglist.ui.components
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
@@ -80,16 +79,6 @@ fun ShoppingListTopBar(text: String) {
                     leadingIcon = {
                         Icon(
                             painter = painterResource(R.drawable.outline_language_24),
-                            contentDescription = null
-                        )
-                    }
-                )
-                DropdownMenuItem(
-                    text = { Text("Money Settings") },
-                    onClick = {  },
-                    leadingIcon = {
-                        Icon(
-                            painter = painterResource(R.drawable.outline_attach_money_24),
                             contentDescription = null
                         )
                     }

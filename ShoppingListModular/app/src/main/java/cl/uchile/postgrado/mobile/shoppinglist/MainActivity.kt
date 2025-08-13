@@ -6,27 +6,41 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import cl.uchile.postgrado.mobile.shoppinglist.model.UserSettingsViewModel
 import cl.uchile.postgrado.mobile.shoppinglist.ui.screens.addProductScreen.AddProductScreen
 import cl.uchile.postgrado.mobile.shoppinglist.ui.screens.productDetailScreen.ProductDetailScreen
 import cl.uchile.postgrado.mobile.shoppinglist.ui.screens.shoppingListScreen.ShoppingListScreen
 import cl.uchile.postgrado.mobile.shoppinglist.ui.theme.DefaultTheme
 
 class MainActivity : ComponentActivity() {
+    private val userSettingsViewModel = UserSettingsViewModel()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
         splashScreen.setKeepOnScreenCondition { false }
+
+        // Cargar los ajustes del usuario
+        userSettingsViewModel.getSettings(this)
+
         enableEdgeToEdge()
         setContent {
             DefaultTheme {
                 AppNavigation()
             }
         }
+    }
+
+    // Solo se ejecuta al CERRAR la aplicación
+    override fun onDestroy() {
+        super.onDestroy()
+
+        // Guardar los ajustes del usuario
+        userSettingsViewModel.saveSettings(this)
     }
 }
 
