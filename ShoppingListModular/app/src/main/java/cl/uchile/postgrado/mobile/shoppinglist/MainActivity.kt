@@ -1,10 +1,12 @@
 package cl.uchile.postgrado.mobile.shoppinglist
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.NavHost
@@ -16,8 +18,11 @@ import cl.uchile.postgrado.mobile.shoppinglist.ui.screens.productDetailScreen.Pr
 import cl.uchile.postgrado.mobile.shoppinglist.ui.screens.shoppingListScreen.ShoppingListScreen
 import cl.uchile.postgrado.mobile.shoppinglist.ui.theme.DefaultTheme
 
+
 class MainActivity : ComponentActivity() {
-    private val userSettingsViewModel = UserSettingsViewModel()
+    companion object {
+        lateinit var userSettingsViewModel: UserSettingsViewModel
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
@@ -25,11 +30,12 @@ class MainActivity : ComponentActivity() {
         splashScreen.setKeepOnScreenCondition { false }
 
         // Cargar los ajustes del usuario
-        userSettingsViewModel.getSettings(this)
+        userSettingsViewModel = UserSettingsViewModel(this)
+        userSettingsViewModel.getSettings()
 
         enableEdgeToEdge()
         setContent {
-            DefaultTheme {
+            DefaultTheme(userSettingsViewModel.theme) {
                 AppNavigation()
             }
         }
@@ -40,7 +46,7 @@ class MainActivity : ComponentActivity() {
         super.onDestroy()
 
         // Guardar los ajustes del usuario
-        userSettingsViewModel.saveSettings(this)
+        userSettingsViewModel.saveSettings()
     }
 }
 

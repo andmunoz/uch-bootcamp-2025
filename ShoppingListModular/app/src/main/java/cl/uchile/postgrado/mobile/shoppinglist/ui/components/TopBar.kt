@@ -1,5 +1,6 @@
 package cl.uchile.postgrado.mobile.shoppinglist.ui.components
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
@@ -22,13 +23,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import cl.uchile.postgrado.mobile.shoppinglist.MainActivity
 import cl.uchile.postgrado.mobile.shoppinglist.R
 
+@SuppressLint("ViewModelConstructorInComposable")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ShoppingListTopBar(text: String) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
     var expanded by remember { mutableStateOf(false) }
+    var showDialog by remember { mutableStateOf(false) }
+    val userSettingsViewModel = MainActivity.userSettingsViewModel
+    var selectedTheme by remember { mutableStateOf(userSettingsViewModel.theme) }
 
     CenterAlignedTopAppBar(
         title = {
@@ -59,13 +65,25 @@ fun ShoppingListTopBar(text: String) {
                     contentDescription = "Localized description"
                 )
             }
+            ThemeSettingDialog(
+                showDialog = showDialog,
+                title = "Theme Settings",
+                onDismiss = { showDialog = false },
+                currentTheme = selectedTheme,
+                onThemeChange = { theme ->
+                    selectedTheme = theme
+                    userSettingsViewModel.theme = theme
+                    userSettingsViewModel.saveThemeSetting()
+                    showDialog = false
+                }
+            )
             DropdownMenu(
                 expanded = expanded,
                 onDismissRequest = { expanded = false }
             ) {
                 DropdownMenuItem(
                     text = { Text("Theme Settings") },
-                    onClick = {  },
+                    onClick = { showDialog = true },
                     leadingIcon = {
                         Icon(
                             Icons.Filled.Settings,

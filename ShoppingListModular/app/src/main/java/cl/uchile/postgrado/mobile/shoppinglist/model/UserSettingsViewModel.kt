@@ -11,40 +11,42 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 
-class UserSettingsViewModel: ViewModel() {
-    var theme: String? by mutableStateOf("")
-    fun setTheme(theme: String) {
-        this.theme = theme
-    }
-
-    var language: String? by mutableStateOf("")
-
-    fun setLanguage(language: String) {
-        this.language = language
-    }
+class UserSettingsViewModel(private val context: Context): ViewModel() {
+    var theme: String by mutableStateOf("system")
+    var language: String by mutableStateOf("es-cl")
 
     val THEME_KEY = stringPreferencesKey("theme")
     val LANGUAGE_KEY = stringPreferencesKey("language")
 
     val Context.dataStore by preferencesDataStore("UserSettings")
 
-    fun getSettings(context: Context) {
+    fun getSettings() {
         runBlocking {
             val dataStore = context.dataStore
             val preferences = dataStore.data.first()
-            theme = preferences[THEME_KEY]
-            language = preferences[LANGUAGE_KEY]
+            if (preferences[THEME_KEY] != null)
+                theme = preferences[THEME_KEY].toString()
+            if (preferences[LANGUAGE_KEY] != null)
+                language = preferences[LANGUAGE_KEY].toString()
         }
     }
 
-    fun saveSettings(context: Context) {
+    fun saveSettings() {
         runBlocking {
             val dataStore = context.dataStore
             dataStore.edit { preferences ->
-                preferences[THEME_KEY] = theme.toString()
-                preferences[LANGUAGE_KEY] = language.toString()
+                preferences[THEME_KEY] = theme
+                preferences[LANGUAGE_KEY] = language
             }
         }
     }
 
+    fun saveThemeSetting() {
+        runBlocking {
+            val dataStore = context.dataStore
+            dataStore.edit { preferences ->
+                preferences[THEME_KEY] = theme
+            }
+        }
+    }
 }
