@@ -73,7 +73,7 @@ fun ShoppingListTopBar(text: String) {
                 onThemeChange = { theme ->
                     selectedTheme = theme
                     userSettingsViewModel.theme = theme
-                    userSettingsViewModel.saveThemeSetting()
+                    userSettingsViewModel.saveThemeSetting(MainActivity())
                     showDialog = false
                 }
             )

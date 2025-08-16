@@ -16,12 +16,14 @@ import cl.uchile.postgrado.mobile.shoppinglist.model.UserSettingsViewModel
 import cl.uchile.postgrado.mobile.shoppinglist.ui.screens.addProductScreen.AddProductScreen
 import cl.uchile.postgrado.mobile.shoppinglist.ui.screens.productDetailScreen.ProductDetailScreen
 import cl.uchile.postgrado.mobile.shoppinglist.ui.screens.shoppingListScreen.ShoppingListScreen
+import cl.uchile.postgrado.mobile.shoppinglist.ui.screens.shoppingListScreen.ShoppingListViewModel
 import cl.uchile.postgrado.mobile.shoppinglist.ui.theme.DefaultTheme
 
 
 class MainActivity : ComponentActivity() {
     companion object {
         lateinit var userSettingsViewModel: UserSettingsViewModel
+        lateinit var shoppingListViewModel: ShoppingListViewModel
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,8 +32,12 @@ class MainActivity : ComponentActivity() {
         splashScreen.setKeepOnScreenCondition { false }
 
         // Cargar los ajustes del usuario
-        userSettingsViewModel = UserSettingsViewModel(this)
-        userSettingsViewModel.getSettings()
+        userSettingsViewModel = UserSettingsViewModel()
+        userSettingsViewModel.getSettings(applicationContext)
+
+        // Cargar la lista de compras ya guardada
+        shoppingListViewModel = ShoppingListViewModel()
+        shoppingListViewModel.loadProducts(applicationContext)
 
         enableEdgeToEdge()
         setContent {
@@ -46,7 +52,10 @@ class MainActivity : ComponentActivity() {
         super.onDestroy()
 
         // Guardar los ajustes del usuario
-        userSettingsViewModel.saveSettings()
+        userSettingsViewModel.saveSettings(applicationContext)
+
+        // Guardar la lista de compras existente en la app
+        shoppingListViewModel.saveProducts(applicationContext)
     }
 }
 

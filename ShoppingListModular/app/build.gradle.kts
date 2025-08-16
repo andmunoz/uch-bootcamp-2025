@@ -51,6 +51,7 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.splashscreen)
     implementation(libs.androidx.datastore.preferences)
+    implementation(libs.gson)
 
     testImplementation(libs.junit)
 

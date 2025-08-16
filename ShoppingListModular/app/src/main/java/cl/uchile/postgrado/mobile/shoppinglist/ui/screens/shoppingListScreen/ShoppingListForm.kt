@@ -64,9 +64,8 @@ fun ShoppingListForm(modifier: Modifier = Modifier,
     }
 
     LazyColumn(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
-            .padding(top = 100.dp)
     ) {
         items(productListModel.products) {producto ->
             Card(
@@ -90,10 +89,16 @@ fun ShoppingListForm(modifier: Modifier = Modifier,
                         checked = selected,
                         onCheckedChange = { selected = it }
                     )
-                    Text(
-                        producto.productName + " " + producto.productBrand,
+                    Column(
                         modifier = Modifier.weight(1f)
-                    )
+                    ) {
+                        Text(
+                            producto.productQuantity.toString() + " " + producto.productName + " " + producto.productBrand
+                        )
+                        Text(
+                            producto.productDescription
+                        )
+                    }
                     SecondaryButton(
                         text = stringResource(R.string.details_button),
                         onClick = {

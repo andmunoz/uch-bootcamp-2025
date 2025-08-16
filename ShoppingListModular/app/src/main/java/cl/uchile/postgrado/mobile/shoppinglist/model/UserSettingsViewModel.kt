@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 
-class UserSettingsViewModel(private val context: Context): ViewModel() {
+class UserSettingsViewModel: ViewModel() {
     var theme: String by mutableStateOf("system")
     var language: String by mutableStateOf("es-cl")
 
@@ -20,7 +20,7 @@ class UserSettingsViewModel(private val context: Context): ViewModel() {
 
     val Context.dataStore by preferencesDataStore("UserSettings")
 
-    fun getSettings() {
+    fun getSettings(context: Context) {
         runBlocking {
             val dataStore = context.dataStore
             val preferences = dataStore.data.first()
@@ -31,7 +31,7 @@ class UserSettingsViewModel(private val context: Context): ViewModel() {
         }
     }
 
-    fun saveSettings() {
+    fun saveSettings(context: Context) {
         runBlocking {
             val dataStore = context.dataStore
             dataStore.edit { preferences ->
@@ -41,7 +41,7 @@ class UserSettingsViewModel(private val context: Context): ViewModel() {
         }
     }
 
-    fun saveThemeSetting() {
+    fun saveThemeSetting(context: Context) {
         runBlocking {
             val dataStore = context.dataStore
             dataStore.edit { preferences ->
