@@ -1,0 +1,31 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "productQuantity": 3,
+      "productName": "Tallarines 77",
+      "productBrand": "Luchetti",
+      "productDescription": "Paquete de 400 grs",
+      "productPrice": 490,
+      "productCategory": "Abarrotes"
+    },
+    {
+      "id": 2,
+      "productQuantity": 6,
+      "productName": "Atún",
+      "productBrand": "Van Camps",
+      "productDescription": "Lata de 100 grs",
+      "productPrice": 1190,
+      "productCategory": "Abarrotes"
+    },
+    {
+      "id": 3,
+      "productQuantity": 2,
+      "productName": "Yogurt",
+      "productBrand": "Griego",
+      "productDescription": "Pote de 25 gr",
+      "productPrice": 590,
+      "productCategory": "Lácteos"
+    }
+  ]
+}

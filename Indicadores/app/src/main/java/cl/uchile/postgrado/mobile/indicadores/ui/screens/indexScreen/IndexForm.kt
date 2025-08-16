@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import cl.uchile.postgrado.mobile.indicadores.R
+import cl.uchile.postgrado.mobile.indicadores.ui.components.Destination
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -35,8 +36,8 @@ import kotlinx.coroutines.launch
 fun IndexForm(navController: NavHostController,
               snackbarHostState: SnackbarHostState,
               innerPadding: PaddingValues,
+              destination: Destination,
               indexModel: IndexViewModel = viewModel()) {
-    var expandedIndexType by remember { mutableStateOf(false) }
     var expandedIndex by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
 
@@ -46,38 +47,21 @@ fun IndexForm(navController: NavHostController,
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        ExposedDropdownMenuBox(
-            expanded = expandedIndexType,
-            onExpandedChange = { expandedIndexType = !expandedIndexType },
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth()
-        ) {
-            TextField(
-                value = indexModel.indexType,
-                onValueChange = { },
-                readOnly = true,
-                label = { Text(stringResource(R.string.index_type_text)) },
-                isError = indexModel.indexErrorMessage != null,
-                trailingIcon = { TrailingIcon(expanded = expandedIndexType) },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .menuAnchor(MenuAnchorType.PrimaryEditable, true)
+        indexModel.indexType = destination.contentDescription
+
+        if (destination == Destination.NAC) {
+            Text(
+                "Índices Nacionales",
+                modifier = Modifier.padding(16.dp),
+                style = MaterialTheme.typography.titleLarge
             )
-            ExposedDropdownMenu(
-                expanded = expandedIndexType,
-                onDismissRequest = { expandedIndexType = false }
-            ) {
-                indexModel.indexTypeOptions.forEach { option ->
-                    DropdownMenuItem(
-                        text = { Text(option) },
-                        onClick = {
-                            expandedIndexType = false
-                            indexModel.onIndexTypeChange(option)
-                        }
-                    )
-                }
-            }
+        }
+        else if (destination == Destination.INT) {
+            Text(
+                "Índices Internacionales",
+                modifier = Modifier.padding(16.dp),
+                style = MaterialTheme.typography.titleLarge
+            )
         }
 
         ExposedDropdownMenuBox(

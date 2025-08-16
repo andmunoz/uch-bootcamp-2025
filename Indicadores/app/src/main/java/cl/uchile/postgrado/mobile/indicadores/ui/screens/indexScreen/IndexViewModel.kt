@@ -14,9 +14,9 @@ class IndexViewModel : ViewModel() {
     var index by mutableStateOf("")
     var date by mutableStateOf("")
 
-    fun onIndexTypeChange(newIndex: String) {
+    /* fun onIndexTypeChange(newIndex: String) {
         indexType = newIndex
-    }
+    } */
 
     fun onIndexChange(newIndex: String) {
         index = newIndex

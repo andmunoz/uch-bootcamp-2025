@@ -6,12 +6,17 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun DefaultTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    theme: String,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+    val colorScheme = when(theme) {
+        "light" -> LightColorScheme
+        "dark" -> DarkColorScheme
+        else ->
+            if (isSystemInDarkTheme())
+                DarkColorScheme
+            else
+                LightColorScheme
     }
 
     MaterialTheme(

@@ -12,8 +12,10 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import cl.uchile.postgrado.mobile.shoppinglist.R
 import cl.uchile.postgrado.mobile.shoppinglist.ui.components.ShoppingListTopBar
 import kotlinx.coroutines.CoroutineScope
 
@@ -46,7 +48,7 @@ fun ProductDetailScreen(id: String?, navController: NavHostController) {
 
     Scaffold(
         topBar = {
-            ShoppingListTopBar(drawerState, scope)
+            ShoppingListTopBar(stringResource(R.string.app_name))
         },
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->

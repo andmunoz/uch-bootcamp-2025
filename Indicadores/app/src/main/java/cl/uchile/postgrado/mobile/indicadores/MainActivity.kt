@@ -9,6 +9,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import cl.uchile.postgrado.mobile.indicadores.ui.components.Destination
 import cl.uchile.postgrado.mobile.indicadores.ui.screens.indexDetailScreen.IndexDetailScreen
 import cl.uchile.postgrado.mobile.indicadores.ui.screens.indexScreen.IndexScreen
 
@@ -25,9 +26,12 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "home") {
-        composable("home") {
-            IndexScreen(navController)
+    NavHost(navController = navController, startDestination = "nacional") {
+        composable("nacional") {
+            IndexScreen(navController, Destination.NAC)
+        }
+        composable("internacional") {
+            IndexScreen(navController, Destination.INT)
         }
         composable("index_detail/{index}/{dd}/{mm}/{yyyy}") { backStackEntry ->
             val index = backStackEntry.arguments?.getString("index")
