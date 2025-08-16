@@ -9,28 +9,29 @@ import androidx.lifecycle.ViewModel
 class AddProductViewModel : ViewModel() {
     var productName by mutableStateOf("")
         private set
-    
     fun onProductNameChange(value: String) {
         productName = value
     }
 
+    var productQuantity by mutableStateOf("")
+    fun onProductQuantityChange(value: String) {
+        productQuantity = value
+    }
+
     var productBrand by mutableStateOf("")
         private set
-
     fun onProductBrandChange(value: String) {
         productBrand = value
     }
 
     var productDescription by mutableStateOf("")
         private set
-
     fun onProductDescriptionChange(value: String) {
         productDescription = value
     }
 
     var productPrice by mutableStateOf("")
         private set
-
     fun onProductPriceChange(value: String) {
         productPrice = value
     }
@@ -72,6 +73,7 @@ class AddProductViewModel : ViewModel() {
 
     fun addProduct(saveStateHandle: SavedStateHandle?) {
         saveStateHandle?.set("productName", productName)
+        saveStateHandle?.set("productQuantity", productQuantity)
         saveStateHandle?.set("productBrand", productBrand)
         saveStateHandle?.set("productDescription", productDescription)
         saveStateHandle?.set("productPrice", productPrice)

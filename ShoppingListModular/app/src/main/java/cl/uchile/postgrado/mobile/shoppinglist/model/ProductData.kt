@@ -7,5 +7,5 @@ data class ProductData(
     val productBrand: String,
     val productDescription: String,
     val productCategory: String,
-    val productPrice: String
+    val productPrice: Float?
 )

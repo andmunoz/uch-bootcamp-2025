@@ -12,12 +12,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults.TrailingIcon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuAnchorType
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
@@ -34,6 +36,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -81,14 +84,14 @@ fun AddProductForm(
     }
 
     Column(
-        modifier = Modifier
-            .padding(top = 100.dp)
+        modifier = modifier
             .fillMaxSize()
             .verticalScroll(scrollState)
             .imePadding(),
     ) {
         Text(
             text = stringResource(R.string.add_title),
+            style = MaterialTheme.typography.titleLarge,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
@@ -114,6 +117,18 @@ fun AddProductForm(
                     .padding(16.dp)
             )
         }
+
+        TextField(
+            value = viewModel.productQuantity,
+            onValueChange = { viewModel.onProductQuantityChange(it) },
+            label = { stringResource(R.string.product_label) },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            placeholder = { Text(stringResource(R.string.product_hint)) },
+            singleLine = true,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        )
 
         TextField(
             value = viewModel.productBrand,
@@ -185,6 +200,7 @@ fun AddProductForm(
             onValueChange = { viewModel.onProductPriceChange(it) },
             label = { Text("Precio") },
             placeholder = { Text("Precio del Producto") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             singleLine = true,
             isError = viewModel.productPriceError != null,
             modifier = Modifier

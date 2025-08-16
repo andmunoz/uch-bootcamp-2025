@@ -14,12 +14,16 @@ class ShoppingListViewModel : ViewModel() {
     fun addProductFromHandler(savedStateHandle: SavedStateHandle?) {
         val productName = savedStateHandle?.get<String>("productName")
         if (productName == null) return
-        var productQuantity = savedStateHandle.get<Int>("productQuantity")
-        if (productQuantity == null)
-            productQuantity = 1
+        var productQuantity = 1
+        val quantity = savedStateHandle.get<String>("productQuantity")
+        if (quantity != null)
+            productQuantity = quantity.toInt()
         val productBrand = savedStateHandle.get<String>("productBrand")
         val productDescription = savedStateHandle.get<String>("productDescription")
-        val productPrice = savedStateHandle.get<String>("productPrice")
+        var productPrice:Float? = null
+        val price = savedStateHandle.get<String>("productPrice")
+        if (price != null)
+            productPrice = price.toFloat()
         val productCategory = savedStateHandle.get<String>("productCategory")
         val product = ProductData(
             id = products.size + 1,
@@ -28,7 +32,7 @@ class ShoppingListViewModel : ViewModel() {
             productBrand = productBrand ?: "",
             productDescription = productDescription ?: "",
             productCategory = productCategory ?: "",
-            productPrice = productPrice ?: ""
+            productPrice = productPrice
         )
         addProduct(product)
     }
@@ -67,7 +71,7 @@ class ShoppingListViewModel : ViewModel() {
                 val productBrand = product.getString("productBrand")
                 val productDescription = product.getString("productDescription")
                 val productCategory = product.getString("productCategory")
-                val productPrice = product.getString("productPrice")
+                val productPrice: Float? = product.getDouble("productPrice").toFloat()
                 val productData = ProductData(
                     id = id,
                     productQuantity = productQuantity,
@@ -98,6 +102,8 @@ class ShoppingListViewModel : ViewModel() {
             productObject.put("productPrice", product.productPrice)
             productArray.put(productObject)
         }
+        json.put("products", productArray)
+        println(json)
         context.openFileOutput("shopping_list.json", Context.MODE_PRIVATE).use {
             it.write(json.toString().toByteArray())
         }
