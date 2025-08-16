@@ -57,34 +57,35 @@ class ShoppingListViewModel : ViewModel() {
     }
 
     fun loadProducts(context: Context) {
+        val json = "{ products: [] }"
         try {
             val json = context.openFileInput("shopping_list.json").bufferedReader().use {
                 it.readText()
             }
-            val productList = JSONObject(json)
-            val productArray = productList.getJSONArray("products")
-            for (i in 0 until productArray.length()) {
-                val product = productArray.getJSONObject(i)
-                val id = product.getInt("id")
-                val productQuantity = product.getInt("productQuantity")
-                val productName = product.getString("productName")
-                val productBrand = product.getString("productBrand")
-                val productDescription = product.getString("productDescription")
-                val productCategory = product.getString("productCategory")
-                val productPrice: Float? = product.getDouble("productPrice").toFloat()
-                val productData = ProductData(
-                    id = id,
-                    productQuantity = productQuantity,
-                    productName = productName,
-                    productBrand = productBrand,
-                    productDescription = productDescription,
-                    productCategory = productCategory,
-                    productPrice = productPrice
-                )
-                products.add(productData)
-            }
         } catch (e: Exception) {
             e.printStackTrace()
+        }
+        val productList = JSONObject(json)
+        val productArray = productList.getJSONArray("products")
+        for (i in 0 until productArray.length()) {
+            val product = productArray.getJSONObject(i)
+            val id = product.getInt("id")
+            val productQuantity = product.getInt("productQuantity")
+            val productName = product.getString("productName")
+            val productBrand = product.getString("productBrand")
+            val productDescription = product.getString("productDescription")
+            val productCategory = product.getString("productCategory")
+            val productPrice: Float? = product.getDouble("productPrice").toFloat()
+            val productData = ProductData(
+                id = id,
+                productQuantity = productQuantity,
+                productName = productName,
+                productBrand = productBrand,
+                productDescription = productDescription,
+                productCategory = productCategory,
+                productPrice = productPrice
+            )
+            products.add(productData)
         }
     }
 
@@ -103,9 +104,13 @@ class ShoppingListViewModel : ViewModel() {
             productArray.put(productObject)
         }
         json.put("products", productArray)
-        println(json)
-        context.openFileOutput("shopping_list.json", Context.MODE_PRIVATE).use {
-            it.write(json.toString().toByteArray())
+        try {
+            context.openFileOutput("shopping_list.json", Context.MODE_PRIVATE).use {
+                it.write(json.toString().toByteArray())
+            }
+        }
+        catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 }
