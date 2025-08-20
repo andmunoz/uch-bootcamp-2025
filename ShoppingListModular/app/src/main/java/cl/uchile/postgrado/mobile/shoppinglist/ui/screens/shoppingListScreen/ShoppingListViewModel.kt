@@ -29,7 +29,7 @@ class ShoppingListViewModel : ViewModel() {
             productPrice = price.toFloat()
         val productCategory = savedStateHandle.get<String>("productCategory")
         val product = ProductData(
-            id = products.size + 1,
+            id = null,
             productQuantity = productQuantity,
             productName = productName,
             productBrand = productBrand ?: "",
