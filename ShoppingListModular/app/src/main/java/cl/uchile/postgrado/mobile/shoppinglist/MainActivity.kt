@@ -37,6 +37,7 @@ class MainActivity : ComponentActivity() {
 
         // Cargar la lista de compras ya guardada
         shoppingListViewModel = ShoppingListViewModel()
+        shoppingListViewModel.getDbHelper(applicationContext)
         shoppingListViewModel.loadProducts(applicationContext)
 
         enableEdgeToEdge()

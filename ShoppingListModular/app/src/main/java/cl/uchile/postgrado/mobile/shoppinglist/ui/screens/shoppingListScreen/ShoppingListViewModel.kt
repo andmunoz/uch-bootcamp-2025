@@ -4,10 +4,13 @@ import android.content.Context
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import cl.uchile.postgrado.mobile.shoppinglist.model.ProductData
-import org.json.JSONObject
-import org.json.JSONArray
+import cl.uchile.postgrado.mobile.shoppinglist.model.ShoppingListDBHelper
 
 class ShoppingListViewModel : ViewModel() {
+    companion object {
+        lateinit var dbHelper: ShoppingListDBHelper
+    }
+
     var products = mutableListOf<ProductData>()
         private set
 
@@ -56,8 +59,12 @@ class ShoppingListViewModel : ViewModel() {
         return products.find { it.id == id }
     }
 
+    fun getDbHelper(context: Context) {
+        dbHelper = ShoppingListDBHelper(context)
+    }
+
     fun loadProducts(context: Context) {
-        val json = "{ products: [] }"
+        /* val json = "{ products: [] }"
         try {
             val json = context.openFileInput("shopping_list.json").bufferedReader().use {
                 it.readText()
@@ -86,11 +93,13 @@ class ShoppingListViewModel : ViewModel() {
                 productPrice = productPrice
             )
             products.add(productData)
-        }
+        } */
+        val products = dbHelper.getProducts()
+        this.products = products.toMutableList()
     }
 
     fun saveProducts(context: Context) {
-        val json = JSONObject()
+        /* val json = JSONObject()
         val productArray = JSONArray()
         for (product in products) {
             val productObject = JSONObject()
@@ -111,6 +120,9 @@ class ShoppingListViewModel : ViewModel() {
         }
         catch (e: Exception) {
             e.printStackTrace()
+        } */
+        for (product in products) {
+            dbHelper.addOrUpdateProduct(product)
         }
     }
 }
