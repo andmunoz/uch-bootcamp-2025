@@ -13,7 +13,13 @@ import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults.TrailingIcon
+import androidx.compose.material3.MenuAnchorType
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -29,15 +35,18 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import cl.uchile.postgrado.mobile.shoppinglist.R
+import cl.uchile.postgrado.mobile.shoppinglist.model.viewmodel.ShoppingListViewModel
 import cl.uchile.postgrado.mobile.shoppinglist.ui.components.SecondaryButton
 
 // Componente que muestra la lista de productos
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ShoppingListForm(modifier: Modifier = Modifier,
+fun ShoppingListForm(innerPadding: Modifier = Modifier,
                      navController: NavHostController,
                      productListModel: ShoppingListViewModel = viewModel()) {
 
     var selected by remember { mutableStateOf(false) }
+    var expanded by remember { mutableStateOf(false) }
     val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
     if (savedStateHandle != null) {
         productListModel.addProductFromHandler(savedStateHandle)
@@ -63,48 +72,85 @@ fun ShoppingListForm(modifier: Modifier = Modifier,
         )
     }
 
-    LazyColumn(
-        modifier = modifier
-            .fillMaxSize()
+    Column(
+        modifier = innerPadding
     ) {
-        items(productListModel.products) {producto ->
-            Card(
-                elevation = CardDefaults.cardElevation(4.dp),
-                shape = CutCornerShape(8.dp),
-                border = CardDefaults.outlinedCardBorder(),
-                colors = CardDefaults.cardColors(
-                    containerColor = Color.White.copy(alpha = 0.5f)     // Transparenta el fondo
-                ),
+        ExposedDropdownMenuBox(
+            expanded = expanded,
+            onExpandedChange = { expanded = !expanded },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            TextField(
+                value = "Supermercado",
+                onValueChange = { },
+                readOnly = true,
+                label = { Text("Lista de Compras") },
+                trailingIcon = { TrailingIcon(expanded = expanded) },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp)
+                    .menuAnchor(MenuAnchorType.PrimaryEditable, true) // Importante para que funcione correctamente
+            )
+            ExposedDropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
             ) {
-                Row(
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Checkbox(
-                        checked = selected,
-                        onCheckedChange = { selected = it }
-                    )
-                    Column(
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        Text(
-                            producto.productQuantity.toString() + " " + producto.productName + " " + producto.productBrand
-                        )
-                        Text(
-                            producto.productDescription
-                        )
-                    }
-                    SecondaryButton(
-                        text = stringResource(R.string.details_button),
+                /* productCategories.forEach { opt ->
+                    DropdownMenuItem(
+                        text = { Text(opt) },
                         onClick = {
-                            navController.navigate("product_detail/" + producto.id)
+                            viewModel.onProductCategoryChange(opt)
+                            expanded = false
                         }
                     )
+                } */
+            }
+        }
+
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+        ) {
+            items(productListModel.products) {producto ->
+                Card(
+                    elevation = CardDefaults.cardElevation(4.dp),
+                    shape = CutCornerShape(8.dp),
+                    border = CardDefaults.outlinedCardBorder(),
+                    colors = CardDefaults.cardColors(
+                        containerColor = Color.White.copy(alpha = 0.5f)     // Transparenta el fondo
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp)
+                ) {
+                    Row(
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Checkbox(
+                            checked = selected,
+                            onCheckedChange = { selected = it }
+                        )
+                        Column(
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Text(
+                                producto.productQuantity.toString() + " " + producto.productName + " " + producto.productBrand
+                            )
+                            Text(
+                                producto.productDescription
+                            )
+                        }
+                        SecondaryButton(
+                            text = stringResource(R.string.details_button),
+                            onClick = {
+                                navController.navigate("product_detail/" + producto.id)
+                            }
+                        )
+                    }
                 }
             }
         }

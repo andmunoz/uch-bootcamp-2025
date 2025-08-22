@@ -51,7 +51,8 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.splashscreen)
     implementation(libs.androidx.datastore.preferences)
-    implementation(libs.gson)
+    implementation(libs.androidx.room.common.jvm)
+    implementation(libs.androidx.room.ktx)
 
     testImplementation(libs.junit)
 

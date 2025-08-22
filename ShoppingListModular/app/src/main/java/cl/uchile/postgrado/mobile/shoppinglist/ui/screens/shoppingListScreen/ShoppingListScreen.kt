@@ -36,7 +36,7 @@ fun ShoppingListScreen(navController: NavHostController) {
     ) { innerPadding ->
         val shoppingListViewModel = MainActivity.shoppingListViewModel
         ShoppingListForm(
-            modifier = Modifier.padding(paddingValues = innerPadding),
+            innerPadding = Modifier.padding(paddingValues = innerPadding),
             navController = navController,
             productListModel = shoppingListViewModel
         )

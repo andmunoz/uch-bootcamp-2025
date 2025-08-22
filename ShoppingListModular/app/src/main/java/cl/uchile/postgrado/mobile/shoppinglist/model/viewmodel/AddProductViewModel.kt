@@ -1,4 +1,4 @@
-package cl.uchile.postgrado.mobile.shoppinglist.ui.screens.addProductScreen
+package cl.uchile.postgrado.mobile.shoppinglist.model.viewmodel
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

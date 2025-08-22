@@ -1,22 +1,20 @@
 package cl.uchile.postgrado.mobile.shoppinglist
 
-import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import cl.uchile.postgrado.mobile.shoppinglist.model.UserSettingsViewModel
+import cl.uchile.postgrado.mobile.shoppinglist.model.viewmodel.UserSettingsViewModel
 import cl.uchile.postgrado.mobile.shoppinglist.ui.screens.addProductScreen.AddProductScreen
 import cl.uchile.postgrado.mobile.shoppinglist.ui.screens.productDetailScreen.ProductDetailScreen
 import cl.uchile.postgrado.mobile.shoppinglist.ui.screens.shoppingListScreen.ShoppingListScreen
-import cl.uchile.postgrado.mobile.shoppinglist.ui.screens.shoppingListScreen.ShoppingListViewModel
+import cl.uchile.postgrado.mobile.shoppinglist.model.viewmodel.ShoppingListViewModel
 import cl.uchile.postgrado.mobile.shoppinglist.ui.theme.DefaultTheme
 
 
@@ -37,8 +35,7 @@ class MainActivity : ComponentActivity() {
 
         // Cargar la lista de compras ya guardada
         shoppingListViewModel = ShoppingListViewModel()
-        shoppingListViewModel.getDbHelper(applicationContext)
-        shoppingListViewModel.loadProducts(applicationContext)
+        shoppingListViewModel.loadShoppingLists(applicationContext)
 
         enableEdgeToEdge()
         setContent {
@@ -56,7 +53,7 @@ class MainActivity : ComponentActivity() {
         userSettingsViewModel.saveSettings(applicationContext)
 
         // Guardar la lista de compras existente en la app
-        shoppingListViewModel.saveProducts(applicationContext)
+        // shoppingListViewModel.saveProducts()
     }
 }
 
