@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Lista de Contactos</string>
+    <string name="add_contact_description">Agregar Contacto</string>
+    <string name="add_contact">Agregar</string>
+    <string name="back_description">Volver</string>
+    <string name="add_contact_title">Crear Contacto</string>
+    <string name="name_field">Nombre</string>
+    <string name="phone_field">Teléfono</string>
+    <string name="email_field">Correo</string>
+</resources>
