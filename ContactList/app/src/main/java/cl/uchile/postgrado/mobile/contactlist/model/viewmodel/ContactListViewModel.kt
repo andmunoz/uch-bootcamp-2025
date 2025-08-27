@@ -1,45 +1,30 @@
 package cl.uchile.postgrado.mobile.contactlist.model.viewmodel
 
 import android.content.Context
-import android.util.Log
-import androidx.room.Room
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import cl.uchile.postgrado.mobile.contactlist.model.room.Contact
-import cl.uchile.postgrado.mobile.contactlist.model.room.ContactDatabase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import cl.uchile.postgrado.mobile.contactlist.model.room.ContactRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-class ContactListViewModel {
-    private val contacts = mutableListOf<Contact>()
-    object DataBaseBuilder {
-        private var db: ContactDatabase? = null
-        fun getInstance(context: Context): ContactDatabase {
-            if (db == null) {
-                db = Room.databaseBuilder(
-                    context.applicationContext,
-                    ContactDatabase::class.java,
-                    ContactDatabase.DBNAME
-                ).build()
-            }
-            return db!!
-        }
-    }
-    fun loadContacts(context: Context) {
-        val db = DataBaseBuilder.getInstance(context)
-        CoroutineScope(Dispatchers.IO).launch {
-            Log.d("ContactListViewModel", "Loading contacts")
-            contacts.addAll(db.contactDao().getAll())
-        }
-    }
-    fun getContacts(): List<Contact> {
-        return contacts
+class ContactListViewModel(private val repository: ContactRepository): ViewModel() {
+    val contacts: StateFlow<List<Contact>> =
+        repository.contacts.stateIn(
+            viewModelScope,
+            SharingStarted.Lazily,
+            emptyList()
+        )
+
+    fun getContacts(): List<Contact>? {
+        return contacts.value
     }
     fun addContact(contact: Contact, context: Context) {
-        contacts.add(contact)
-        val db = DataBaseBuilder.getInstance(context)
-        CoroutineScope(Dispatchers.IO).launch {
-            Log.d("ContactListViewModel", "Adding contact: $contact")
-            db.contactDao().insert(contact)
+        viewModelScope.launch {
+            repository.addContact(contact)
         }
     }
 }

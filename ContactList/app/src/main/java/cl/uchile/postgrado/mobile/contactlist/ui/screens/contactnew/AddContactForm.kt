@@ -14,18 +14,25 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import cl.uchile.postgrado.mobile.contactlist.R
 import cl.uchile.postgrado.mobile.contactlist.model.room.Contact
+import cl.uchile.postgrado.mobile.contactlist.model.room.ContactDatabase
+import cl.uchile.postgrado.mobile.contactlist.model.room.ContactRepository
 import cl.uchile.postgrado.mobile.contactlist.model.viewmodel.ContactListViewModel
+import cl.uchile.postgrado.mobile.contactlist.ui.screens.contactlist.ContactListViewModelFactory
 
 @Composable
 fun AddContactForm(modifier: Modifier = Modifier, navController: NavController) {
-    val contactListViewModel = ContactListViewModel()
+    val db = remember { ContactDatabase.getDatabase(navController.context) }
+    val repository = remember { ContactRepository(db.contactDao()) }
+    val contactListViewModel: ContactListViewModel = viewModel(
+        factory = ContactListViewModelFactory(repository)
+    )
     var contactName by remember { mutableStateOf("") }
     var contactPhoneNumber by remember { mutableStateOf("") }
     var contactEmail by remember { mutableStateOf("") }

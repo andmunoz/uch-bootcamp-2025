@@ -5,19 +5,20 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ContactDao {
     @Query("SELECT * FROM contacts")
-    fun getAll(): List<Contact>
+    fun getAll(): Flow<List<Contact>>
     @Query("SELECT * FROM contacts WHERE id = :id")
-    fun getById(id: Int): Contact?
+    fun getById(id: Int): Flow<Contact?>
     @Query("SELECT * FROM contacts WHERE name LIKE :name")
-    fun getByName(name: String): List<Contact>
+    fun getByName(name: String): Flow<List<Contact>>
     @Insert
-    fun insert(contact: Contact)
+    suspend fun insert(contact: Contact)
     @Update
-    fun update(contact: Contact)
+    suspend fun update(contact: Contact)
     @Delete
-    fun delete(contact: Contact)
+    suspend fun delete(contact: Contact)
 }

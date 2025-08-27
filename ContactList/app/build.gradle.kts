@@ -55,6 +55,7 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.material3)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.runtime.livedata)
     kapt(libs.androidx.room.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
