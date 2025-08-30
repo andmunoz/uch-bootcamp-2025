@@ -2,6 +2,7 @@ package cl.uchile.postgrado.mobile.indicadores.ui.screens.indexScreen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -16,6 +17,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,6 +30,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import cl.uchile.postgrado.mobile.indicadores.R
+import cl.uchile.postgrado.mobile.indicadores.model.IndexViewModel
+import cl.uchile.postgrado.mobile.indicadores.model.Indicador
 import cl.uchile.postgrado.mobile.indicadores.ui.components.Destination
 import kotlinx.coroutines.launch
 
@@ -40,6 +44,7 @@ fun IndexForm(navController: NavHostController,
               indexModel: IndexViewModel = viewModel()) {
     var expandedIndex by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
+    val businessIndex by indexModel.businessIndex.collectAsState()
 
     Column(
         modifier = Modifier
@@ -55,8 +60,7 @@ fun IndexForm(navController: NavHostController,
                 modifier = Modifier.padding(16.dp),
                 style = MaterialTheme.typography.titleLarge
             )
-        }
-        else if (destination == Destination.INT) {
+        } else if (destination == Destination.INT) {
             Text(
                 "Índices Internacionales",
                 modifier = Modifier.padding(16.dp),
@@ -86,7 +90,7 @@ fun IndexForm(navController: NavHostController,
                 expanded = expandedIndex,
                 onDismissRequest = { expandedIndex = false }
             ) {
-               indexModel.getIndexOptions().forEach { option ->
+                indexModel.getIndexOptions().forEach { option ->
                     DropdownMenuItem(
                         text = { Text(option) },
                         onClick = {
@@ -97,7 +101,7 @@ fun IndexForm(navController: NavHostController,
                 }
             }
         }
-        indexModel.indexErrorMessage?.let{
+        indexModel.indexErrorMessage?.let {
             Text(
                 text = it,
                 color = MaterialTheme.colorScheme.error,
@@ -115,7 +119,7 @@ fun IndexForm(navController: NavHostController,
                 .fillMaxWidth()
                 .padding(16.dp)
         )
-        indexModel.dateErrorMessage?.let{
+        indexModel.dateErrorMessage?.let {
             Text(
                 text = it,
                 color = MaterialTheme.colorScheme.error,
@@ -127,9 +131,8 @@ fun IndexForm(navController: NavHostController,
             onClick = {
                 val result = indexModel.validateForm()
                 if (result.isSuccess) {
-                    navController.navigate("index_detail/${indexModel.index}/${indexModel.date}")
-                }
-                else {
+                    indexModel.getIndex()
+                } else {
                     scope.launch {
                         snackbarHostState.showSnackbar("El formulario presenta errores")
                     }
@@ -140,6 +143,23 @@ fun IndexForm(navController: NavHostController,
                 .padding(16.dp)
         ) {
             Text(stringResource(R.string.query_button))
+        }
+
+    if (businessIndex != null && businessIndex.codigo != "" && businessIndex.serie != null) {
+            Row() {
+                Text(
+                    text = businessIndex.nombre,
+                    modifier = Modifier.padding(16.dp)
+                )
+                Text(
+                    text = businessIndex.serie[0].valor.toString(),
+                    modifier = Modifier.padding(16.dp)
+                )
+                Text(
+                    text = businessIndex.unidad_medida.toString(),
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
         }
     }
 }

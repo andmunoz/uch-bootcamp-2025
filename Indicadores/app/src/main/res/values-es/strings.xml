@@ -4,6 +4,6 @@
     <string name="index_type_text">Tipo de Índice</string>
     <string name="business_index_text">Índice Económico</string>
     <string name="date_text">Fecha</string>
-    <string name="date_placeholder">Formato dd/mm/aaaa</string>
+    <string name="date_placeholder">Formato dd-mm-aaaa</string>
     <string name="query_button">Consultar</string>
 </resources>

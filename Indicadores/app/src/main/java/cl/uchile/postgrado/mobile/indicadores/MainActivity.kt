@@ -10,7 +10,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import cl.uchile.postgrado.mobile.indicadores.ui.components.Destination
-import cl.uchile.postgrado.mobile.indicadores.ui.screens.indexDetailScreen.IndexDetailScreen
 import cl.uchile.postgrado.mobile.indicadores.ui.screens.indexScreen.IndexScreen
 
 class MainActivity : ComponentActivity() {
@@ -32,14 +31,6 @@ fun AppNavigation() {
         }
         composable("internacional") {
             IndexScreen(navController, Destination.INT)
-        }
-        composable("index_detail/{index}/{dd}/{mm}/{yyyy}") { backStackEntry ->
-            val index = backStackEntry.arguments?.getString("index")
-            val dateDay = backStackEntry.arguments?.getString("dd")
-            val dateMonth = backStackEntry.arguments?.getString("mm")
-            val dateYear = backStackEntry.arguments?.getString("yyyy")
-
-            IndexDetailScreen(navController, index, "$dateDay/$dateMonth/$dateYear")
         }
     }
 }

@@ -1,22 +1,37 @@
-package cl.uchile.postgrado.mobile.indicadores.ui.screens.indexScreen
+package cl.uchile.postgrado.mobile.indicadores.model
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import cl.uchile.postgrado.mobile.indicadores.service.IndicadoresApiService
+import cl.uchile.postgrado.mobile.indicadores.service.IndicadoresRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
 class IndexViewModel : ViewModel() {
-    val indexTypeOptions = listOf("Nacionales", "Internacionales")
-    val indexNationalOptions = listOf("UF", "UTM", "UTA")
-    val indexInternationalOptions = listOf("Dólar", "Euro")
+    val indexNationalOptions = listOf(
+        "uf",
+        "ivp",
+        "ipc",
+        "utm",
+        "imacec",
+        "tpm",
+        "libra_cobre",
+        "tasa_desempleo"
+    )
+    val indexInternationalOptions = listOf(
+        "dolar",
+        "dolar_intercambio",
+        "euro",
+        "bitcoin"
+    )
 
     var indexType by mutableStateOf("")
     var index by mutableStateOf("")
     var date by mutableStateOf("")
-
-    /* fun onIndexTypeChange(newIndex: String) {
-        indexType = newIndex
-    } */
 
     fun onIndexChange(newIndex: String) {
         index = newIndex
@@ -31,6 +46,28 @@ class IndexViewModel : ViewModel() {
             "Nacionales" -> indexNationalOptions
             "Internacionales" -> indexInternationalOptions
             else -> emptyList()
+        }
+    }
+
+    private var _businessIndex = MutableStateFlow<Indicador>(Indicador(
+        codigo = "",
+        nombre = "",
+        unidad_medida = "",
+        serie = emptyList()
+    ))
+    val businessIndex: StateFlow<Indicador> = _businessIndex
+    fun getIndex() {
+        viewModelScope.launch {
+            try {
+                val result = IndicadoresApiService
+                    .ApiInstance
+                    .api
+                    .obtenerIndicadorPorFecha(index, date)
+                _businessIndex.value = result
+            }
+            catch (e: Exception) {
+                val errorMessage = e.message ?: "Error desconocido"
+            }
         }
     }
 
@@ -49,7 +86,7 @@ class IndexViewModel : ViewModel() {
             dateErrorMessage = "Por favor, ingrese una fecha"
             return Result.failure(Exception(dateErrorMessage))
         } else {
-            val dateRegex = Regex("\\d{2}/\\d{2}/\\d{4}")
+            val dateRegex = Regex("\\d{2}-\\d{2}-\\d{4}")
             if (!date.matches(dateRegex)) {
                 dateErrorMessage = "Por favor, ingrese una fecha válida"
                 return Result.failure(Exception(dateErrorMessage))
