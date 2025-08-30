@@ -12,23 +12,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class IndexViewModel : ViewModel() {
-    val indexNationalOptions = listOf(
-        "uf",
-        "ivp",
-        "ipc",
-        "utm",
-        "imacec",
-        "tpm",
-        "libra_cobre",
-        "tasa_desempleo"
-    )
-    val indexInternationalOptions = listOf(
-        "dolar",
-        "dolar_intercambio",
-        "euro",
-        "bitcoin"
-    )
-
     var indexType by mutableStateOf("")
     var index by mutableStateOf("")
     var date by mutableStateOf("")
@@ -41,13 +24,13 @@ class IndexViewModel : ViewModel() {
         date = newDate
     }
 
-    fun getIndexOptions(): List<String> {
+    /* fun getIndexOptions(): Any {
         return when (indexType) {
-            "Nacionales" -> indexNationalOptions
-            "Internacionales" -> indexInternationalOptions
-            else -> emptyList()
+            "Nacionales" -> IndicadorNacionalEnumeration.entries.toTypedArray()
+            "Internacionales" -> IndicadorInternacionalEnumeration.entries.toTypedArray()
+            else -> emptyList<Any>()
         }
-    }
+    } */
 
     private var _businessIndex = MutableStateFlow<Indicador>(Indicador(
         codigo = "",

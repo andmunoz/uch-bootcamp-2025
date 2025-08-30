@@ -32,6 +32,8 @@ import androidx.navigation.NavHostController
 import cl.uchile.postgrado.mobile.indicadores.R
 import cl.uchile.postgrado.mobile.indicadores.model.IndexViewModel
 import cl.uchile.postgrado.mobile.indicadores.model.Indicador
+import cl.uchile.postgrado.mobile.indicadores.model.IndicadorInternacionalEnumeration
+import cl.uchile.postgrado.mobile.indicadores.model.IndicadorNacionalEnumeration
 import cl.uchile.postgrado.mobile.indicadores.ui.components.Destination
 import kotlinx.coroutines.launch
 
@@ -45,6 +47,7 @@ fun IndexForm(navController: NavHostController,
     var expandedIndex by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     val businessIndex by indexModel.businessIndex.collectAsState()
+    var indexSelected by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -76,7 +79,7 @@ fun IndexForm(navController: NavHostController,
                 .fillMaxWidth()
         ) {
             TextField(
-                value = indexModel.index,
+                value = indexSelected,
                 onValueChange = { },
                 readOnly = true,
                 label = { Text(stringResource(R.string.business_index_text)) },
@@ -90,14 +93,29 @@ fun IndexForm(navController: NavHostController,
                 expanded = expandedIndex,
                 onDismissRequest = { expandedIndex = false }
             ) {
-                indexModel.getIndexOptions().forEach { option ->
-                    DropdownMenuItem(
-                        text = { Text(option) },
-                        onClick = {
-                            expandedIndex = false
-                            indexModel.onIndexChange(option)
-                        }
-                    )
+                if (indexModel.indexType == "Nacionales") {
+                    IndicadorNacionalEnumeration.entries.forEach { option ->
+                        DropdownMenuItem(
+                            text = { Text(option.nombre) },
+                            onClick = {
+                                expandedIndex = false
+                                indexSelected = option.nombre
+                                indexModel.onIndexChange(option.codigo)
+                            }
+                        )
+                    }
+                }
+                else {
+                    IndicadorInternacionalEnumeration.entries.forEach { option ->
+                        DropdownMenuItem(
+                            text = { Text(option.nombre) },
+                            onClick = {
+                                expandedIndex = false
+                                indexSelected = option.nombre
+                                indexModel.onIndexChange(option.codigo)
+                            }
+                        )
+                    }
                 }
             }
         }
@@ -145,7 +163,7 @@ fun IndexForm(navController: NavHostController,
             Text(stringResource(R.string.query_button))
         }
 
-    if (businessIndex != null && businessIndex.codigo != "" && businessIndex.serie != null) {
+    if (businessIndex != null && businessIndex.codigo != "" && businessIndex.serie.size > 0) {
             Row() {
                 Text(
                     text = businessIndex.nombre,
