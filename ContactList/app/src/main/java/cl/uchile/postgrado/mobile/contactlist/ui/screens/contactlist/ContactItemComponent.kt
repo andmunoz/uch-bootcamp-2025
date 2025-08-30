@@ -14,7 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import cl.uchile.postgrado.mobile.contactlist.R
-import cl.uchile.postgrado.mobile.contactlist.model.room.Contact
+import cl.uchile.postgrado.mobile.contactlist.room.Contact
 
 @Composable
 fun ContactItemComponent(contact: Contact, navController: NavController) {
@@ -29,7 +29,9 @@ fun ContactItemComponent(contact: Contact, navController: NavController) {
             .fillMaxWidth()
             .padding(8.dp),
     ) {
-        Column() {
+        Column(
+            modifier = Modifier.padding(8.dp)
+        ) {
             Row() {
                 Text(
                     stringResource(R.string.name_label),

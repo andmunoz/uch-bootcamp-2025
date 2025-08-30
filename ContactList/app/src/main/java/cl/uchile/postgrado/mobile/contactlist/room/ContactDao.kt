@@ -1,4 +1,4 @@
-package cl.uchile.postgrado.mobile.contactlist.model.room
+package cl.uchile.postgrado.mobile.contactlist.room
 
 import androidx.room.Dao
 import androidx.room.Delete

@@ -1,4 +1,4 @@
-package cl.uchile.postgrado.mobile.contactlist.model.room
+package cl.uchile.postgrado.mobile.contactlist.room
 
 import android.content.Context
 import androidx.room.Database
