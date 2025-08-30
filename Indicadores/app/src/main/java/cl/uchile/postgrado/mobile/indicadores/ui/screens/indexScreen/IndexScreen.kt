@@ -29,6 +29,6 @@ fun IndexScreen(navController: NavHostController, destination: Destination) {
         modifier = Modifier
             .fillMaxSize()
     ) { innerPadding ->
-        IndexForm(navController, snackbarHostState, innerPadding, destination)
+        IndexForm(snackbarHostState, innerPadding, destination)
     }
 }

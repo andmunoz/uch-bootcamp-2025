@@ -1,5 +1,6 @@
 package cl.uchile.postgrado.mobile.indicadores.ui.screens.indexScreen
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -28,19 +29,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavHostController
 import cl.uchile.postgrado.mobile.indicadores.R
 import cl.uchile.postgrado.mobile.indicadores.model.IndexViewModel
-import cl.uchile.postgrado.mobile.indicadores.model.Indicador
 import cl.uchile.postgrado.mobile.indicadores.model.IndicadorInternacionalEnumeration
 import cl.uchile.postgrado.mobile.indicadores.model.IndicadorNacionalEnumeration
 import cl.uchile.postgrado.mobile.indicadores.ui.components.Destination
 import kotlinx.coroutines.launch
 
+@SuppressLint("DefaultLocale")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun IndexForm(navController: NavHostController,
-              snackbarHostState: SnackbarHostState,
+fun IndexForm(snackbarHostState: SnackbarHostState,
               innerPadding: PaddingValues,
               destination: Destination,
               indexModel: IndexViewModel = viewModel()) {
@@ -104,8 +103,7 @@ fun IndexForm(navController: NavHostController,
                             }
                         )
                     }
-                }
-                else {
+                } else {
                     IndicadorInternacionalEnumeration.entries.forEach { option ->
                         DropdownMenuItem(
                             text = { Text(option.nombre) },
@@ -163,21 +161,27 @@ fun IndexForm(navController: NavHostController,
             Text(stringResource(R.string.query_button))
         }
 
-    if (businessIndex != null && businessIndex.codigo != "" && businessIndex.serie.size > 0) {
-            Row() {
+        if (businessIndex.codigo != "" && businessIndex.serie.isNotEmpty()) {
+            Row {
                 Text(
                     text = businessIndex.nombre,
                     modifier = Modifier.padding(16.dp)
                 )
                 Text(
-                    text = businessIndex.serie[0].valor.toString(),
+                    text = String.format("%,.2f", businessIndex.serie[0].valor),
                     modifier = Modifier.padding(16.dp)
                 )
                 Text(
-                    text = businessIndex.unidad_medida.toString(),
+                    text = businessIndex.unidad_medida,
                     modifier = Modifier.padding(16.dp)
                 )
             }
+        } else if (businessIndex.codigo != ""){
+            Text(
+                text = "Ha ocurrido un error al obtener los datos del servicio. " +
+                        "Pruebe ingresando una fecha diferente o intente más tarde.",
+                modifier = Modifier.padding(16.dp)
+            )
         }
     }
 }
