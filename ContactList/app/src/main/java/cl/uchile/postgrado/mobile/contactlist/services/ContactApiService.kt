@@ -26,15 +26,15 @@ interface ContactApiService {
     @GET("contacts.json")
     suspend fun getContacts(): List<Contact>
 
-    // @GET("contacts/{id}")
-    // suspend fun getContactById(@Path("id") id: Int): Contact?
+    @GET("contacts/{id}.json")
+    suspend fun getContactById(@Path("id") id: Int): Contact?
 
     @POST("contacts.json")
     suspend fun addContact(@Body contact: Contact): Contact
 
-    // @PUT("contacts/{id}")
-    // suspend fun updateContact(@Path("id") id: Int, @Body contact: Contact): Contact
+    @PUT("contacts/{id}.json")
+    suspend fun updateContact(@Path("id") id: Int, @Body contact: Contact): Contact
 
-    // @DELETE("contacts/{id}")
-    // suspend fun deleteContact(@Path("id") id: Int)
+    @DELETE("contacts/{id}.json")
+    suspend fun deleteContact(@Path("id") id: Int)
 }
