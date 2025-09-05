@@ -13,6 +13,12 @@ class PokemonRepository {
         emit(response.results)
     }
 
+    suspend fun getPokemon(page: Int): Flow<List<Pokemon>> = flow {
+        val offset = page * limit
+        val response = pokemonApi.getPokemon(limit, offset)
+        emit(response.results)
+    }
+
     suspend fun getPokemonById(id: Int): Flow<PokemonDetail> = flow {
         val response = pokemonApi.getPokemonById(id)
         emit(response)
