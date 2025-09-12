@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "cl.uchile.postgrado.mobile.pokedex"
+    namespace = "cl.uchile.postgrado.mobile.catalogo"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "cl.uchile.postgrado.mobile.pokedex"
+        applicationId = "cl.uchile.postgrado.mobile.catalogo"
         minSdk = 30
         targetSdk = 36
         versionCode = 1
@@ -46,32 +46,25 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
-    implementation(libs.androidx.retrofit)
-    implementation(libs.androidx.retrofit.converter.gson)
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
-
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.messaging)
-
-    implementation(libs.firebase.storge)
-    implementation(libs.firebase.auth)
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.graphics)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    implementation(libs.androidx.compose.material3)
+    implementation(platform(libs.androidx.firebase.bom))
+    implementation(libs.androidx.firebase.database)
+    implementation(libs.firebase.firestore.ktx)
+    implementation(libs.androidx.firebase.auth)
+    implementation(libs.androidx.firebase.storage)
     implementation(libs.coil.compose)
-    implementation(libs.kotlin.coroutines.play.services)
-
-    implementation(libs.firestore.ktx)
-    implementation(libs.firebase.ktx)
+    implementation(libs.kotlinx.coroutines.play.services)
 
     testImplementation(libs.junit)
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
+    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
 
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
 }

@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "cl.uchile.postgrado.mobile.shoppinglist"
-        minSdk = 26
+        minSdk = 30
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
@@ -33,6 +33,9 @@ android {
     }
     buildFeatures {
         compose = true
+    }
+    kotlinOptions {
+        jvmTarget = "11"
     }
 }
 
