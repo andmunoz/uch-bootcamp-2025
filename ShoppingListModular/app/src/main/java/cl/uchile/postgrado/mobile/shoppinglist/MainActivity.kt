@@ -10,18 +10,16 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import cl.uchile.postgrado.mobile.shoppinglist.model.viewmodel.UserSettingsViewModel
+import cl.uchile.postgrado.mobile.shoppinglist.viewmodel.UserSettingsViewModel
 import cl.uchile.postgrado.mobile.shoppinglist.ui.screens.addProductScreen.AddProductScreen
 import cl.uchile.postgrado.mobile.shoppinglist.ui.screens.productDetailScreen.ProductDetailScreen
 import cl.uchile.postgrado.mobile.shoppinglist.ui.screens.shoppingListScreen.ShoppingListScreen
-import cl.uchile.postgrado.mobile.shoppinglist.model.viewmodel.ShoppingListViewModel
 import cl.uchile.postgrado.mobile.shoppinglist.ui.theme.DefaultTheme
 
 
 class MainActivity : ComponentActivity() {
     companion object {
         lateinit var userSettingsViewModel: UserSettingsViewModel
-        lateinit var shoppingListViewModel: ShoppingListViewModel
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,10 +30,6 @@ class MainActivity : ComponentActivity() {
         // Cargar los ajustes del usuario
         userSettingsViewModel = UserSettingsViewModel()
         userSettingsViewModel.getSettings(applicationContext)
-
-        // Cargar la lista de compras ya guardada
-        shoppingListViewModel = ShoppingListViewModel()
-        shoppingListViewModel.loadShoppingLists(applicationContext)
 
         enableEdgeToEdge()
         setContent {
@@ -51,9 +45,6 @@ class MainActivity : ComponentActivity() {
 
         // Guardar los ajustes del usuario
         userSettingsViewModel.saveSettings(applicationContext)
-
-        // Guardar la lista de compras existente en la app
-        // shoppingListViewModel.saveProducts()
     }
 }
 

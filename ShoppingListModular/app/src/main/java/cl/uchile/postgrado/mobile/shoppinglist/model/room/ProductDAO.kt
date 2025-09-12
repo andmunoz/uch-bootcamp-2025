@@ -5,7 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import cl.uchile.postgrado.mobile.shoppinglist.model.room.ProductData
+import cl.uchile.postgrado.mobile.shoppinglist.model.data.ProductData
 
 @Dao
 interface ProductDAO {

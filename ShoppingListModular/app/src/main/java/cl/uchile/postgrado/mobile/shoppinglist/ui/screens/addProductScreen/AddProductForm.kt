@@ -39,7 +39,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import cl.uchile.postgrado.mobile.shoppinglist.R
-import cl.uchile.postgrado.mobile.shoppinglist.model.viewmodel.AddProductViewModel
+import cl.uchile.postgrado.mobile.shoppinglist.viewmodel.AddProductViewModel
 import cl.uchile.postgrado.mobile.shoppinglist.ui.components.PrimaryButton
 import cl.uchile.postgrado.mobile.shoppinglist.ui.components.SecondaryButton
 import kotlinx.coroutines.CoroutineScope

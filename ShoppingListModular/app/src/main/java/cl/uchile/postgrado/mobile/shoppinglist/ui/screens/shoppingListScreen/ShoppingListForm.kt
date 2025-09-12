@@ -13,7 +13,6 @@ import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults.TrailingIcon
@@ -35,7 +34,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import cl.uchile.postgrado.mobile.shoppinglist.R
-import cl.uchile.postgrado.mobile.shoppinglist.model.viewmodel.ShoppingListViewModel
 import cl.uchile.postgrado.mobile.shoppinglist.ui.components.SecondaryButton
 
 // Componente que muestra la lista de productos

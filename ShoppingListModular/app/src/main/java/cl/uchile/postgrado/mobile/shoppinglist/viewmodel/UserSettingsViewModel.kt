@@ -1,4 +1,4 @@
-package cl.uchile.postgrado.mobile.shoppinglist.model.viewmodel
+package cl.uchile.postgrado.mobile.shoppinglist.viewmodel
 
 import android.content.Context
 import androidx.compose.runtime.getValue

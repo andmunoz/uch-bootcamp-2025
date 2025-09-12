@@ -1,4 +1,4 @@
-package cl.uchile.postgrado.mobile.shoppinglist.model.room
+package cl.uchile.postgrado.mobile.shoppinglist.model.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
