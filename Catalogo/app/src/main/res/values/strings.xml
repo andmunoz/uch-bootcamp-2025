@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Catalogo</string>
+    <string name="add_product">Agregar Producto</string>
+    <string name="product_id">Id</string>
+    <string name="product_name">Nombre</string>
+    <string name="product_description">Descripción</string>
+    <string name="product_price">Precio</string>
+    <string name="product_image_url">Imagen</string>
+    <string name="product_added">Guardar Producto</string>
 </resources>

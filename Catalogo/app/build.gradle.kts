@@ -57,6 +57,7 @@ dependencies {
     implementation(libs.androidx.firebase.storage)
     implementation(libs.coil.compose)
     implementation(libs.kotlinx.coroutines.play.services)
+    implementation(libs.androidx.navigation.compose)
 
     testImplementation(libs.junit)
 

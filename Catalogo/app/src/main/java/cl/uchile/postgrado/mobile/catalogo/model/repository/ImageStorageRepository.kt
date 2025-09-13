@@ -10,7 +10,7 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
-class StorageRepository(
+class ImageStorageRepository(
     private val storage: FirebaseStorage = Firebase.storage
 ) {
     suspend fun uploadFile(

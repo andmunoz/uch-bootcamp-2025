@@ -26,7 +26,7 @@ class ContactListViewModel(private val context: Context): ViewModel() {
             try {
                 // val response = ContactApiService.RetrofitInstance.api.getContacts()
                 val db = ContactDatabase.getDatabase(context)
-                _contacts = db.contactDao().getAll() as MutableStateFlow<List<Contact>>
+                _contacts.value = db.contactDao().getAll()
             } catch (e: Exception) {
                 e.printStackTrace()
             }
