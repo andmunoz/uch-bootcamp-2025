@@ -5,11 +5,11 @@ import androidx.lifecycle.ViewModelProvider
 import cl.uchile.postgrado.mobile.contactlist.model.ContactRepository
 import cl.uchile.postgrado.mobile.contactlist.model.ContactListViewModel
 
-class ContactListViewModelFactory(private val repository: ContactRepository): ViewModelProvider.Factory {
+/* class ContactListViewModelFactory(private val repository: ContactRepository): ViewModelProvider.Factory {
     override fun <T: ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ContactListViewModel::class.java)) {
             return ContactListViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
-}
+} */
