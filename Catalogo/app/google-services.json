@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "398551877861",
+    "project_id": "ejemplo-catalogo-a4705",
+    "storage_bucket": "ejemplo-catalogo-a4705.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:398551877861:android:6ec3796c974ffccee6ac0c",
+        "android_client_info": {
+          "package_name": "cl.uchile.postgrado.mobile.catalogo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzy-VDzaheVplhAdDIn3yZ31MKJZY6UPU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
