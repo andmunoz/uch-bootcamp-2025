@@ -1,5 +1,11 @@
 package cl.uchile.postgrado.mobile.googlemapsexample.ui.screens.main
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.util.Log
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,6 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.app.ActivityCompat
 import cl.uchile.postgrado.mobile.googlemapsexample.model.GeocodingRepository
 import cl.uchile.postgrado.mobile.googlemapsexample.model.LocationRepository
 import cl.uchile.postgrado.mobile.googlemapsexample.viewmodel.MapsViewModel
@@ -35,14 +42,34 @@ fun MapsExample(
         GeocodingRepository(LocalContext.current)
     )
 ) {
+    val context = LocalContext.current
     val cameraPosition by mapsViewModel.cameraPosition.collectAsState()
     var address by remember { mutableStateOf("") }
     var latLng by remember { mutableStateOf(LatLng(0.0, 0.0)) }
     var markerState by remember { mutableStateOf<MarkerState?>(MarkerState(position = latLng)) }
-    val context = LocalContext.current
+    val requestPermissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            mapsViewModel.loadUserLocation(context)
+        } else {
+            Toast.makeText(context, "Permiso de ubicación denegado", Toast.LENGTH_SHORT).show()
+        }
+    }
 
     LaunchedEffect(Unit) {
-        mapsViewModel.loadUserLocation(context)
+        if (ActivityCompat.checkSelfPermission(
+                context,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                context,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            mapsViewModel.loadUserLocation(context)
+        } else {
+            requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+        }
     }
 
     Scaffold { innerPadding ->
