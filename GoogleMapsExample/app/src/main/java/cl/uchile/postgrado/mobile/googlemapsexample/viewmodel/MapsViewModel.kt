@@ -54,4 +54,10 @@ class MapsViewModel(private val locationRepository: LocationRepository, private 
         val address = geocodingRepository.getAddressFromCoordinates(latLng.latitude, latLng.longitude)
         return address?: ""
     }
+
+    fun setCameraPosition(latLng: LatLng) {
+        _cameraPosition.value = CameraPositionState(
+            position = CameraPosition.fromLatLngZoom(latLng, 15f)
+        )
+    }
 }

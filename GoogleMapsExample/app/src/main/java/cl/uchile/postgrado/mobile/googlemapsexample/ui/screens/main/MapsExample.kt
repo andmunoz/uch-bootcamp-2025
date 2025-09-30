@@ -2,7 +2,6 @@ package cl.uchile.postgrado.mobile.googlemapsexample.ui.screens.main
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -103,7 +102,12 @@ fun MapsExample(
                     cameraPositionState = camPos,
                     properties = MapProperties(
                         mapType = MapType.NORMAL
-                    )
+                    ),
+                    onMapClick = {
+                        latLng = it
+                        markerState = MarkerState(position = latLng)
+                        mapsViewModel.setCameraPosition(latLng)
+                    }
                 ) {
                     markerState?.let { marker ->
                         Marker(
