@@ -101,7 +101,7 @@ fun CameraScreen() {
                     val uri = (uiState as MediaUIState.Success).uri
                     Log.d("CameraScreen", "uri: $uri")
                     AsyncImage(
-                        model = tempUri,
+                        model = uri,
                         contentDescription = "Selected or captured image"
                     )
                     /* GlideImage(
