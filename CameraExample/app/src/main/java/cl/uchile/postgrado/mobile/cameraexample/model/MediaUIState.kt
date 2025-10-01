@@ -8,3 +8,4 @@ sealed class MediaUIState {
     data class Success(val uri: Uri) : MediaUIState()
     data class Error(val message: String) : MediaUIState()
 }
+
