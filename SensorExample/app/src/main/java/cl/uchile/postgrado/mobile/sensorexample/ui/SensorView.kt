@@ -16,10 +16,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import cl.uchile.postgrado.mobile.sensorexample.model.GyroscopeSensorUIState
 import cl.uchile.postgrado.mobile.sensorexample.model.LuxSensorUIState
 import cl.uchile.postgrado.mobile.sensorexample.model.MagneticSensorUIState
 import cl.uchile.postgrado.mobile.sensorexample.model.MotionSensorUIState
 import cl.uchile.postgrado.mobile.sensorexample.model.ProximitySensorUIState
+import cl.uchile.postgrado.mobile.sensorexample.model.StepSensorUIState
 import cl.uchile.postgrado.mobile.sensorexample.viewmodel.MotionSensorViewModel
 
 @Composable
@@ -35,6 +37,10 @@ fun SensorView() {
         motionSensorViewModel.magneticSensor.collectAsState()
     val luxSensorUIState: State<LuxSensorUIState> =
         motionSensorViewModel.luxSensor.collectAsState()
+    val gyroscopeSensorUIState: State<GyroscopeSensorUIState> =
+        motionSensorViewModel.gyroscopeSensor.collectAsState()
+    val stepSensorUIState: State<StepSensorUIState> =
+        motionSensorViewModel.stepSensor.collectAsState()
 
     LaunchedEffect(Unit) {
         motionSensorViewModel.starListening()
@@ -110,6 +116,36 @@ fun SensorView() {
             )
             Text(
                 text = "lux: ${String.format("%.1f", luxSensorUIState.value.lux)} lx",
+                modifier = Modifier.padding(start = 16.dp, end = 8.dp)
+            )
+            HorizontalDivider(modifier = Modifier.padding(vertical = 16.dp))
+            Text(
+                text = "Gyroscope Sensor",
+                modifier = Modifier.padding(start = 16.dp)
+            )
+            Row(
+                modifier = Modifier.padding(start = 16.dp)
+            ) {
+                Text(
+                    text = "X: ${String.format("%.1f", gyroscopeSensorUIState.value.x)} rad/s",
+                    modifier = Modifier.padding(end = 8.dp)
+                )
+                Text(
+                    text = "Y: ${String.format("%.1f", gyroscopeSensorUIState.value.y)} rad/s",
+                    modifier = Modifier.padding(end = 8.dp)
+                )
+                Text(
+                    text = "Z: ${String.format("%.1f", gyroscopeSensorUIState.value.z)} rad/s",
+                    modifier = Modifier.padding(end = 8.dp)
+                )
+            }
+            HorizontalDivider(modifier = Modifier.padding(vertical = 16.dp))
+            Text(
+                text = "Step Counter",
+                modifier = Modifier.padding(start = 16.dp)
+            )
+            Text(
+                text = "Steps: ${stepSensorUIState.value.steps}",
                 modifier = Modifier.padding(start = 16.dp, end = 8.dp)
             )
             HorizontalDivider(modifier = Modifier.padding(vertical = 16.dp))

@@ -7,10 +7,12 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import androidx.lifecycle.AndroidViewModel
+import cl.uchile.postgrado.mobile.sensorexample.model.GyroscopeSensorUIState
 import cl.uchile.postgrado.mobile.sensorexample.model.LuxSensorUIState
 import cl.uchile.postgrado.mobile.sensorexample.model.MagneticSensorUIState
 import cl.uchile.postgrado.mobile.sensorexample.model.MotionSensorUIState
 import cl.uchile.postgrado.mobile.sensorexample.model.ProximitySensorUIState
+import cl.uchile.postgrado.mobile.sensorexample.model.StepSensorUIState
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class MotionSensorViewModel(application: Application): AndroidViewModel(application), SensorEventListener {
@@ -32,6 +34,14 @@ class MotionSensorViewModel(application: Application): AndroidViewModel(applicat
     private val _luxSensor = MutableStateFlow(LuxSensorUIState())
     val luxSensor = _luxSensor
 
+    private val gyroscope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE)
+    private val _gyroscopeSensor = MutableStateFlow(GyroscopeSensorUIState())
+    val gyroscopeSensor = _gyroscopeSensor
+
+    private val stepCounter = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
+    private val _stepSensor = MutableStateFlow(StepSensorUIState())
+    val stepSensor = _stepSensor
+
     fun starListening() {
         sensorManager.registerListener(
             this,
@@ -51,6 +61,16 @@ class MotionSensorViewModel(application: Application): AndroidViewModel(applicat
         sensorManager.registerListener(
             this,
             lux,
+            SensorManager.SENSOR_DELAY_UI
+        )
+        sensorManager.registerListener(
+            this,
+            gyroscope,
+            SensorManager.SENSOR_DELAY_UI
+        )
+        sensorManager.registerListener(
+            this,
+            stepCounter,
             SensorManager.SENSOR_DELAY_UI
         )
     }
@@ -85,6 +105,18 @@ class MotionSensorViewModel(application: Application): AndroidViewModel(applicat
         if (event?.sensor?.type == Sensor.TYPE_LIGHT) {
             _luxSensor.value = LuxSensorUIState(
                 lux = event.values[0]
+            )
+        }
+        if (event?.sensor?.type == Sensor.TYPE_GYROSCOPE) {
+            _gyroscopeSensor.value = GyroscopeSensorUIState(
+                x = event.values[0],
+                y = event.values[1],
+                z = event.values[2]
+            )
+        }
+        if (event?.sensor?.type == Sensor.TYPE_STEP_COUNTER) {
+            _stepSensor.value = StepSensorUIState(
+                steps = event.values[0].toInt()
             )
         }
     }
