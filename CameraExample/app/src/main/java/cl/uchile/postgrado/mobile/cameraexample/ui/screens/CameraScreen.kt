@@ -105,8 +105,8 @@ fun CameraScreen() {
                         contentDescription = "Selected or captured image"
                     )
                     /* GlideImage(
-                    model = tempUri,
-                    contentDescription = "Selected or captured image"
+                        model = uri,
+                        contentDescription = "Selected or captured image"
                     ) */
                 }
                 is MediaUIState.Error -> Text("Error: ${(uiState as MediaUIState.Error).message}")
