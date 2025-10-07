@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Google Maps Example</string>
     <string name="google_api_key">AIzaSyDYV7UyKIK9TnjcERyfJrDfSY4bNTS0q9o</string>
+    <string name="loading_map">Cargando mapa...</string>
+    <string name="search">Buscar</string>
+    <string name="address">Dirección</string>
 </resources>

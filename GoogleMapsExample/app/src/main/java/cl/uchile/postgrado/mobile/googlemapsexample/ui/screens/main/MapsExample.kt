@@ -2,6 +2,7 @@ package cl.uchile.postgrado.mobile.googlemapsexample.ui.screens.main
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -23,16 +24,22 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.core.app.ActivityCompat
+import cl.uchile.postgrado.mobile.googlemapsexample.R
 import cl.uchile.postgrado.mobile.googlemapsexample.model.GeocodingRepository
+import cl.uchile.postgrado.mobile.googlemapsexample.model.InfoMarker
 import cl.uchile.postgrado.mobile.googlemapsexample.model.LocationRepository
 import cl.uchile.postgrado.mobile.googlemapsexample.viewmodel.MapsViewModel
 import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.compose.CameraPositionState
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapType
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
+import com.google.maps.android.compose.rememberCameraPositionState
+import com.google.maps.android.ktx.model.cameraPosition
 
 @Composable
 fun MapsExample(
@@ -42,10 +49,11 @@ fun MapsExample(
     )
 ) {
     val context = LocalContext.current
-    val cameraPosition by mapsViewModel.cameraPosition.collectAsState()
+
+    val mapState by mapsViewModel.mapState.collectAsState()
+    val userLocation = mapsViewModel.getActualUserLocation().collectAsState()
     var address by remember { mutableStateOf("") }
-    var latLng by remember { mutableStateOf(LatLng(0.0, 0.0)) }
-    var markerState by remember { mutableStateOf<MarkerState?>(MarkerState(position = latLng)) }
+
     val requestPermissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
     ) { isGranted ->
@@ -83,44 +91,56 @@ fun MapsExample(
                 TextField(
                     value = address,
                     onValueChange = { address = it },
-                    label = { Text("Dirección") },
+                    label = { Text(stringResource(R.string.address)) },
                 )
                 Button(
                     onClick = {
                         mapsViewModel.getCoordinatesFromAddress(address)
                     }
                 ) {
-                    Text("Buscar")
+                    Text(stringResource(R.string.search))
                 }
             }
-            cameraPosition?.let { camPos ->
-                latLng = camPos.position.target
-                markerState = MarkerState(position = latLng)
+
+            Log.d("MapsExample", "MapState: $mapState")
+            val cameraPosition = mapsViewModel.getCameraPosition()
+
+            if (cameraPosition != null) {
+                Log.d("MapsExample", "CameraPosition: ${cameraPosition.position}")
                 GoogleMap(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    cameraPositionState = camPos,
+                    modifier = Modifier.fillMaxSize(),
+                    cameraPositionState = cameraPosition,
                     properties = MapProperties(
-                        mapType = MapType.NORMAL
+                        mapType = mapState.mapType
                     ),
-                    onMapClick = {
-                        latLng = it
-                        markerState = MarkerState(position = latLng)
+                    onMapClick = { latLng ->
+                        mapState.infoMarker = null
                         mapsViewModel.setCameraPosition(latLng)
+                    },
+                    onMapLongClick = { latLng ->
+                        val address = mapsViewModel.getAddressFromCoordinates(latLng)
+                        mapState.infoMarker = InfoMarker(
+                            position = MarkerState(position = latLng),
+                            title = address,
+                            snippet = "Lat: ${latLng.latitude}, Long: ${latLng.longitude}",
+                            visible = true
+                        )
                     }
                 ) {
-                    markerState?.let { marker ->
+                    if (mapState.infoMarker != null) {
+                        val marker = mapState?.infoMarker!!
+                        Log.d("MapsExample", "Marker: ${marker}")
                         Marker(
-                            state = marker,
-                            title = mapsViewModel.getAddressFromCoordinates(latLng),
-                            snippet = "Lat: ${latLng.latitude}, Lng: ${latLng.longitude}",
-                            draggable = false
+                            state = marker.position,
+                            title = marker.title,
+                            snippet = marker.snippet,
+                            visible = marker.visible
                         )
                     }
                 }
-            } ?: run {
+            } else {
                 Text(
-                    text = "Cargando ubicación...",
+                    text = stringResource(R.string.loading_map),
                     modifier = Modifier
                         .fillMaxWidth(1f)
                 )
