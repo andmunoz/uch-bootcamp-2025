@@ -62,7 +62,7 @@ fun AudioRecorderScreen(viewModel: AudioViewModel = AudioViewModel()) {
                 }
 
                 is AudioUIState.Success -> {
-                    // No hacer nada, ya que el audio se grabó correctamente
+                    viewModel.restart()
                 }
             }
         }

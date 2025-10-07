@@ -50,6 +50,10 @@ class AudioViewModel : ViewModel() {
         }
     }
 
+    fun restart() {
+        _uiState.value = AudioUIState.Idle
+    }
+
     override fun onCleared() {
         super.onCleared()
         recorder?.release()
