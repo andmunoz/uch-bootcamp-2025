@@ -1,7 +1,6 @@
 package cl.uchile.postgrado.mobile.micexamples.ui.screen
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.speech.RecognizerIntent
@@ -74,6 +73,7 @@ fun AudioRecorderScreen(viewModel: AudioViewModel = AudioViewModel()) {
         if (result.resultCode == RESULT_OK) {
             val speechResult = result.data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
             recognizedText = speechResult?.get(0) ?: "No pude reconocer el texto"
+            viewModel.setIdle()
         } else {
             Toast.makeText(context, "No pude reconocer la voz", Toast.LENGTH_SHORT).show()
         }
@@ -90,13 +90,14 @@ fun AudioRecorderScreen(viewModel: AudioViewModel = AudioViewModel()) {
                 modifier = Modifier
                     .padding(16.dp)
                     .fillMaxWidth()
+                    .weight(1f)
             )
 
             when (uiState) {
                 is AudioUIState.Idle -> {
                     Button(
                         modifier = Modifier
-                            .padding(16.dp)
+                            .padding(8.dp)
                             .fillMaxWidth(),
                         onClick = { permissionLauncher.launch(Manifest.permission.RECORD_AUDIO) }
                     ) {
@@ -104,7 +105,7 @@ fun AudioRecorderScreen(viewModel: AudioViewModel = AudioViewModel()) {
                     }
                     Button(
                         modifier = Modifier
-                            .padding(16.dp)
+                            .padding(8.dp)
                             .fillMaxWidth(),
                         onClick = {
                             viewModel.setRecording()
@@ -122,7 +123,7 @@ fun AudioRecorderScreen(viewModel: AudioViewModel = AudioViewModel()) {
                     }
                     Button(
                         modifier = Modifier
-                            .padding(16.dp)
+                            .padding(8.dp)
                             .fillMaxWidth(),
                         onClick = {
                             tts?.speak(
@@ -140,7 +141,7 @@ fun AudioRecorderScreen(viewModel: AudioViewModel = AudioViewModel()) {
                 is AudioUIState.Recording -> {
                     Button(
                         modifier = Modifier
-                            .padding(16.dp)
+                            .padding(8.dp)
                             .fillMaxWidth(),
                         onClick = { viewModel.stopRecording() }) {
                         Text("Detener Grabación")
@@ -150,12 +151,12 @@ fun AudioRecorderScreen(viewModel: AudioViewModel = AudioViewModel()) {
                 is AudioUIState.Error -> {
                     Text(
                         modifier = Modifier
-                            .padding(16.dp)
+                            .padding(8.dp)
                             .fillMaxWidth(),
                         text = "Error: ${(uiState as AudioUIState.Error).message}")
                     Button(
                         modifier = Modifier
-                            .padding(16.dp)
+                            .padding(8.dp)
                             .fillMaxWidth(),
                         onClick = { viewModel.stopRecording() }) {
                         Text("Reiniciar")
