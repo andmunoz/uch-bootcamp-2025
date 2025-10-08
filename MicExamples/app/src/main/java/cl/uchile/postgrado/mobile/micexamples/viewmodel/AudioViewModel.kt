@@ -30,7 +30,7 @@ class AudioViewModel : ViewModel() {
             try {
                 prepare()
                 start()
-                _uiState.value = AudioUIState.Recording
+                setRecording()
             } catch (e: Exception) {
                 _uiState.value = AudioUIState.Error(e.message ?: "Error al iniciar la grabación")
             }
@@ -50,8 +50,12 @@ class AudioViewModel : ViewModel() {
         }
     }
 
-    fun restart() {
+    fun setIdle() {
         _uiState.value = AudioUIState.Idle
+    }
+
+    fun setRecording() {
+        _uiState.value = AudioUIState.Recording
     }
 
     override fun onCleared() {
