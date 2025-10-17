@@ -1,4 +1,4 @@
-package cl.uchile.posgrado.bootcamps.mobile.demo
+package cl.uchile.posgrado.bootcamps.mobile.demo.model
 
 class JVMPlatform : Platform {
     override val name: String = "Java ${System.getProperty("java.version")}"

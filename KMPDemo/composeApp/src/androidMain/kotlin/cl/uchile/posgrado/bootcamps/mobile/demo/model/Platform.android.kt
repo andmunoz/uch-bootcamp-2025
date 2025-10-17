@@ -1,4 +1,4 @@
-package cl.uchile.posgrado.bootcamps.mobile.demo
+package cl.uchile.posgrado.bootcamps.mobile.demo.model
 
 import android.os.Build
 
