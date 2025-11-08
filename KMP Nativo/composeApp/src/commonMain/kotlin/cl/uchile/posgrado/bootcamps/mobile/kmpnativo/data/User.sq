@@ -1,0 +1,12 @@
+CREATE TABLE user(
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    username TEXT NOT NULL,
+    fullname TEXT NOT NULL,
+    photo TEXT
+);
+
+insertUser:
+INSERT INTO user(username, fullname, photo) VALUES (?, ?, ?);
+
+selectAllUsers:
+SELECT * FROM user;

@@ -1,0 +1,7 @@
+TEAM_ID=
+
+PRODUCT_NAME=kmpynativo
+PRODUCT_BUNDLE_IDENTIFIER=cl.uchile.posgrado.bootcamps.mobile.kmpynativo.kmpynativo$(TEAM_ID)
+
+CURRENT_PROJECT_VERSION=1
+MARKETING_VERSION=1.0
