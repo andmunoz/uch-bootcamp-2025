@@ -13,13 +13,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import cl.uchile.posgrado.bootcamps.mobile.taskmulitplatform.model.database.DatabaseDriverFactory
 import cl.uchile.posgrado.bootcamps.mobile.taskmulitplatform.viewmodel.TasksViewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 @Preview
-fun TaskScreen() {
-    val tasksViewModel = TasksViewModel()
+fun TaskScreen(driverFactory: DatabaseDriverFactory) {
+    val tasksViewModel = TasksViewModel(driverFactory)
 
     Column(
         modifier = Modifier
@@ -41,7 +42,7 @@ fun TaskScreen() {
                         .padding(8.dp)
                 ) {
                     Checkbox(
-                        checked = task.completed,
+                        checked = task.completed == 1L,
                         onCheckedChange = {
                             // ToDo
                         }

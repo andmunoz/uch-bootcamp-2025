@@ -10,3 +10,10 @@ SELECT * FROM Task;
 
 insertTask:
 INSERT OR REPLACE INTO Task (title) VALUES (?);
+
+removeTask:
+DELETE FROM Task WHERE id = ?;
+
+updateTask:
+UPDATE Task SET title = ? WHERE id = ?;
+

@@ -7,7 +7,8 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeHotReload)
-    alias(libs.plugins.sqlDelight)
+    alias(libs.plugins.kotlinxSerialization)
+    alias(libs.plugins.sqldelight)
 }
 
 kotlin {
@@ -97,7 +98,7 @@ compose.desktop {
 
 sqldelight {
     databases {
-        create("TasksDatabase") {
+        create("AppDatabase") {
             packageName.set("cl.uchile.posgrado.bootcamps.mobile.taskmulitplatform.model.database")
         }
     }

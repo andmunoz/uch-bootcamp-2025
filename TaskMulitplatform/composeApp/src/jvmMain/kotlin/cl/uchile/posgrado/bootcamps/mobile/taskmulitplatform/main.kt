@@ -2,6 +2,7 @@ package cl.uchile.posgrado.bootcamps.mobile.taskmulitplatform
 
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
+import cl.uchile.posgrado.bootcamps.mobile.taskmulitplatform.model.database.DatabaseDriverFactory
 import cl.uchile.posgrado.bootcamps.mobile.taskmulitplatform.ui.MainScreen
 
 fun main() = application {
@@ -9,6 +10,6 @@ fun main() = application {
         onCloseRequest = ::exitApplication,
         title = "Task Multiplatform",
     ) {
-        MainScreen()
+        MainScreen(driverFactory = DatabaseDriverFactory())
     }
 }

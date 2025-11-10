@@ -1,6 +1,6 @@
 package cl.uchile.posgrado.bootcamps.mobile.taskmulitplatform.model.api
 
-import cl.uchile.posgrado.bootcamps.mobile.taskmulitplatform.model.Task
+import cl.uchile.posgrado.bootcamps.mobile.taskmulitplatform.model.database.Task
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 

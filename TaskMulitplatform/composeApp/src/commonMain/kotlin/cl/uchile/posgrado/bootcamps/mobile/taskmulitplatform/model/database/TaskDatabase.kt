@@ -1,9 +1,8 @@
 package cl.uchile.posgrado.bootcamps.mobile.taskmulitplatform.model.database
 
-// import cl.uchile.posgrado.bootcamps.mobile.taskmulitplatform.model.database.TasksDatabase
-/* class TaskDatabase(factory: DatabaseDriverFactory) {
+class TaskDatabase(factory: DatabaseDriverFactory) {
     private val driver = factory.createDriver()
-    private val database = TasksDatabase(driver)
+    private val database = AppDatabase(driver)
 
-    val taskQueries = database.userQueries
-} */
+    val taskQueries = database.appDatabaseQueries
+}
