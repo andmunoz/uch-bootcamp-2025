@@ -15,6 +15,6 @@ fun MainScreen() {
         ) {
             Text("Agregar")
         }
+        TaskScreen()
     }
-    TaskScreen()
 }
