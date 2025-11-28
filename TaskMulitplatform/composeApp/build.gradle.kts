@@ -89,8 +89,8 @@ compose.desktop {
         mainClass = "cl.uchile.posgrado.bootcamps.mobile.taskmulitplatform.MainKt"
 
         nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "cl.uchile.posgrado.bootcamps.mobile.taskmulitplatform"
+            targetFormats(TargetFormat.Exe, TargetFormat.Msi)
+            packageName = "Task Multiplatform"
             packageVersion = "1.0.0"
         }
     }

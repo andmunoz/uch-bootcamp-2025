@@ -16,7 +16,9 @@ import androidx.compose.ui.unit.dp
 import cl.uchile.posgrado.bootcamps.mobile.taskmulitplatform.model.database.DatabaseDriverFactory
 import cl.uchile.posgrado.bootcamps.mobile.taskmulitplatform.viewmodel.TasksViewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import androidx.compose.runtime.collectAsState
 
+@Suppress("ViewModelConstructorInComposable")
 @Composable
 @Preview
 fun TaskScreen(driverFactory: DatabaseDriverFactory) {
@@ -34,8 +36,8 @@ fun TaskScreen(driverFactory: DatabaseDriverFactory) {
         Spacer(
             modifier = Modifier.height(16.dp)
         )
-        if (!tasksViewModel.taskList.value.isEmpty()) {
-            tasksViewModel.taskList.value.forEach { task ->
+        if (!tasksViewModel.taskList.collectAsState().value.tasks.isEmpty()) {
+            tasksViewModel.taskList.collectAsState().value.tasks.forEach { task ->
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()

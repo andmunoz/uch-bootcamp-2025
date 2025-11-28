@@ -8,7 +8,7 @@ class TaskApiService {
     private val client = HttpClientFactory.client
     private val baseUrl = "https://jsonplaceholder.typicode.com"
 
-    suspend fun getTasks(): List<Task> {
+    suspend fun getTasks(): ListOfTask {
         return client.get("$baseUrl/todos?_limit=5").body()
     }
 }

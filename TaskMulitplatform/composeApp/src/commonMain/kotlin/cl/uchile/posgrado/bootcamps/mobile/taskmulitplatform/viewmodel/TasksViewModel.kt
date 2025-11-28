@@ -2,6 +2,7 @@ package cl.uchile.posgrado.bootcamps.mobile.taskmulitplatform.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import cl.uchile.posgrado.bootcamps.mobile.taskmulitplatform.model.api.ListOfTask
 import cl.uchile.posgrado.bootcamps.mobile.taskmulitplatform.model.database.Task
 import cl.uchile.posgrado.bootcamps.mobile.taskmulitplatform.model.api.TaskApiService
 import cl.uchile.posgrado.bootcamps.mobile.taskmulitplatform.model.database.DatabaseDriverFactory
@@ -20,13 +21,13 @@ class TasksViewModel(databaseDriverFactory: DatabaseDriverFactory): ViewModel() 
     private val database = TaskDatabase(databaseDriverFactory)
     private val repository = TaskRepository(database)
 
-    private var _taskList = MutableStateFlow(listOf<Task>())
-    val taskList: StateFlow<List<Task>> = _taskList.asStateFlow()
+    private var _taskList = MutableStateFlow(ListOfTask())
+    val taskList: StateFlow<ListOfTask> = _taskList.asStateFlow()
 
     init {
         viewModelScope.launch {
             _taskList.value = apiService.getTasks()
-            taskList.value.forEach { task ->
+            taskList.value.tasks.forEach { task ->
                 addTask(task)
             }
         }
