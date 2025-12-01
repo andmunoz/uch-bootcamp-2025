@@ -1,6 +1,5 @@
 package cl.uchile.postgrado.mobile.calendar.viewmodel
 
-import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import cl.uchile.postgrado.mobile.calendar.database.Holiday
@@ -12,6 +11,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import java.time.Month
 
 class CalendarViewModel(database: HolidayDatabase) : ViewModel() {
     private val repository = CalendarRepository(database)
@@ -35,8 +35,8 @@ class CalendarViewModel(database: HolidayDatabase) : ViewModel() {
                 val holidayYear = holidayDate.year.toLong()
                 val holidayMonth = holidayDate.monthValue.toLong()
                 val holiDayDay = holidayDate.dayOfMonth.toLong()
-                val holidayExist = repository.getHolidaysFromDate(holidayYear, holidayMonth, holiDayDay)
-                if (holidayExist != null) {
+                val holidaysExist = repository.getHolidaysFromDate(holidayYear, holidayMonth, holiDayDay)
+                if (holidaysExist.isNotEmpty()) {
                     continue
                 }
                 val holiday = Holiday(
@@ -52,7 +52,7 @@ class CalendarViewModel(database: HolidayDatabase) : ViewModel() {
         }
     }
 
-    fun getHolidaysFromMonth(month: Long, year: Long) {
+    fun getHolidaysFromMonth(month: Month, year: Long) {
         viewModelScope.launch {
             _holidays.value = repository.getHolidaysFromMonth(month, year, country)
         }

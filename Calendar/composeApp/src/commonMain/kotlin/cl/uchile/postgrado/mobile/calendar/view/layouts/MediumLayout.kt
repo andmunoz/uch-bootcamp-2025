@@ -14,8 +14,8 @@ import java.time.Month
 fun MediumLayout() {
     // Esta es la vista de 2 meses en pantalla
     Row {
-        MonthComponent(MonthObject(Month.NOVEMBER, 2025))   // Parámetro va el mes 1 a pintar
+        MonthComponent(MonthObject(Month.NOVEMBER, 2025), viewModel)   // Parámetro va el mes 1 a pintar
         Spacer(Modifier.width(8.dp))
-        MonthComponent(MonthObject(Month.DECEMBER, 2025))   // Parámetro va el mes 2 a pintar
+        MonthComponent(MonthObject(Month.DECEMBER, 2025), viewModel)   // Parámetro va el mes 2 a pintar
     }
 }

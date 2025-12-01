@@ -8,5 +8,5 @@ import java.time.Month
 @Composable
 fun CompactLayout() {
     // Esta es la vista de 1 solo mes
-    MonthComponent(MonthObject(Month.NOVEMBER, 2025))   // Parámetro va el mes a pintar
+    MonthComponent(MonthObject(Month.NOVEMBER, 2025), viewModel)   // Parámetro va el mes a pintar
 }
