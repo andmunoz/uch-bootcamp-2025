@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
+import cl.uchile.postgrado.mobile.calendar.model.database.DatabaseDriverFactory
+import cl.uchile.postgrado.mobile.calendar.model.database.HolidayDatabase
 import cl.uchile.postgrado.mobile.calendar.view.App
 
 class MainActivity : ComponentActivity() {
@@ -13,14 +13,11 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
+        val driver = DatabaseDriverFactory(this)
+        val database = HolidayDatabase(driver)
+
         setContent {
-            App()
+            App(database)
         }
     }
-}
-
-@Preview
-@Composable
-fun AppAndroidPreview() {
-    App()
 }

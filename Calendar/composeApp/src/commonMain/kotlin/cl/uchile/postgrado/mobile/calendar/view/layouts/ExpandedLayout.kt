@@ -4,19 +4,21 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cl.uchile.postgrado.mobile.calendar.model.MonthObject
 import cl.uchile.postgrado.mobile.calendar.view.components.MonthComponent
-import java.time.Month
+import cl.uchile.postgrado.mobile.calendar.viewmodel.CalendarViewModel
 
 @Composable
-fun ExpandedLayout(monthQty: Int, monthColumnQty: Int) {
+fun ExpandedLayout(monthQty: Int, monthColumnQty: Int, viewModel: CalendarViewModel) {
     val actualDate = java.time.LocalDate.now()
     var monthDate = actualDate
     var totalMonths = 0
     val monthRows = monthQty / monthColumnQty
+    val holiDays = viewModel.getHolidaysFromMonth(monthDate.monthValue.toLong(), monthDate.year.toLong())
 
     // Esta es la vista de 3 meses en pantalla
     Column {
@@ -36,6 +38,7 @@ fun ExpandedLayout(monthQty: Int, monthColumnQty: Int) {
             }
             Spacer(Modifier.width(8.dp))
         }
+        Text("Holidays: $holiDays")
     }
 
 /*  Row {
