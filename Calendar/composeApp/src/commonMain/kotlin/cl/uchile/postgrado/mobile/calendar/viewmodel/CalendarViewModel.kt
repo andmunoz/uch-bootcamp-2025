@@ -54,7 +54,7 @@ class CalendarViewModel(database: HolidayDatabase) : ViewModel() {
 
     fun getHolidaysFromMonth(month: Month, year: Long) {
         viewModelScope.launch {
-            _holidays.value = repository.getHolidaysFromMonth(month, year, country)
+            _holidays.value = repository.getHolidaysFromMonth(month.value.toLong(), year, country)
         }
     }
 }

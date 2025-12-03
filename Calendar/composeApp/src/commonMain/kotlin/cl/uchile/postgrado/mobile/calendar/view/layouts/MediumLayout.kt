@@ -8,10 +8,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cl.uchile.postgrado.mobile.calendar.model.MonthObject
 import cl.uchile.postgrado.mobile.calendar.view.components.MonthComponent
+import cl.uchile.postgrado.mobile.calendar.viewmodel.CalendarViewModel
 import java.time.Month
 
 @Composable
-fun MediumLayout() {
+fun MediumLayout(viewModel: CalendarViewModel) {
     // Esta es la vista de 2 meses en pantalla
     Row {
         MonthComponent(MonthObject(Month.NOVEMBER, 2025), viewModel)   // Parámetro va el mes 1 a pintar

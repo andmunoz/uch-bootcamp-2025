@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cl.uchile.postgrado.mobile.calendar.database.Holiday
 import cl.uchile.postgrado.mobile.calendar.model.MonthObject
 import cl.uchile.postgrado.mobile.calendar.viewmodel.CalendarViewModel
 
@@ -36,7 +37,7 @@ enum class DayOfWeek {
 
 @Composable
 fun MonthComponent(month: MonthObject, viewModel: CalendarViewModel) {
-    val holiDays by viewModel.holydays.collectAsState()
+    val holidays by viewModel.holydays.collectAsState()
     viewModel.getHolidaysFromMonth(month.month, month.year.toLong())
 
     // Se pinta un mes Xs
@@ -98,7 +99,7 @@ fun MonthComponent(month: MonthObject, viewModel: CalendarViewModel) {
         val weeks = month.getWeeksInMonth()
         val startDayOfWeek = month.getStartDayOfWeek()
         val daysInMonth = month.getDaysInMonth()
-        var dayNumber = 1
+        var dayNumber = 1L
         for (week in 1..weeks) {
             Spacer(modifier = Modifier.width(4.dp))
             Row (
@@ -119,7 +120,7 @@ fun MonthComponent(month: MonthObject, viewModel: CalendarViewModel) {
                                 .width(72.dp)
                                 .padding(4.dp),
                             colors = CardDefaults.cardColors(
-                                contentColor = if (day == 7) Color.Red else Color.DarkGray
+                                contentColor = if (day == 7 || isHolyday(dayNumber, holidays)) Color.Red else Color.DarkGray
                             ),
                             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
                         ) {
@@ -137,4 +138,16 @@ fun MonthComponent(month: MonthObject, viewModel: CalendarViewModel) {
             }
         }
     }
+}
+
+fun isHolyday(day: Long, holidays: List<Holiday>) : Boolean {
+    if (holidays.isEmpty()) {
+        return false;
+    }
+    for (h in holidays) {
+        if (h.day == day) {
+            return true;
+        }
+    }
+    return false;
 }
