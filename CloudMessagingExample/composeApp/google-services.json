@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "898439902562",
+    "project_id": "ejemplo-push-notificatio-93be3",
+    "storage_bucket": "ejemplo-push-notificatio-93be3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:898439902562:android:63d9e7cac0d4c02518283b",
+        "android_client_info": {
+          "package_name": "cl.uchile.postgrado.mobile.cloudmessagingexample"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIL1p52T33-_-Iwybhx6WI9XoWVYCGqHw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
